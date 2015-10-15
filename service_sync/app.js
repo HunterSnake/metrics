@@ -33,10 +33,22 @@ server.route([
   },
     {
     method: 'GET',
-    path: '/collections/{collectionName}/{page}',
+    path: '/collections/{collectionName}',
     handler: function(req, reply) {
       loadCollection(req.params.collectionName, function(collection) {
-        collection.find({}, {limit: 10, sort: [['_id', -1]]}).toArray(function(e, results){
+        collection.find({}, {sort: [['_id', -1]]}).toArray(function(e, results){
+          if (e) return reply(e)
+          reply(results)
+        })
+      })
+    }
+  },
+   {
+    method: 'GET',
+    path: '/collections/{collectionName}/AggregateId/{id}',
+    handler: function(req, reply) {
+      loadCollection(req.params.collectionName, function(collection) {
+        collection.find({AggregateId: req.params.id}, {sort: [['_id', -1]]}).toArray(function(e, results){
           if (e) return reply(e)
           reply(results)
         })
@@ -60,30 +72,30 @@ server.route([
       })
     }
   },
-  //   {
-  //   method: 'GET',
-  //   path: '/collections/{collectionName}/{id}',
-  //   handler: function(req, reply) {
-  //     loadCollection(req.params.collectionName, function(collection) {
-  //       collection.findOne({_id: id(req.params.id)}, function(e, result){
-  //         if (e) return reply(e)
-  //         reply(result)
-  //       })
-  //     })
-  //   }
-  // },
   {
     method: 'GET',
-    path: '/collections/{collectionName}/last',
+    path: '/collections/{collectionName}/{id}',
     handler: function(req, reply) {
       loadCollection(req.params.collectionName, function(collection) {
-        collection.findOne({},{sort:[['inTime',-1]]}, function(e, result){
+        collection.findOne({_id: id(req.params.id)}, function(e, result){
           if (e) return reply(e)
           reply(result)
         })
       })
     }
   },
+  // {
+  //   method: 'GET',
+  //   path: '/collections/{collectionName}/last',
+  //   handler: function(req, reply) {
+  //     loadCollection(req.params.collectionName, function(collection) {
+  //       collection.findOne({},{sort:[['inTime',-1]]}, function(e, result){
+  //         if (e) return reply(e)
+  //         reply(result)
+  //       })
+  //     })
+  //   }
+  // },
     {
     method: 'PUT',
     path: '/collections/{collectionName}/{id}',
