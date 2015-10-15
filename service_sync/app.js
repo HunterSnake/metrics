@@ -45,14 +45,19 @@ server.route([
   },
    {
     method: 'GET',
-    path: '/collections/{collectionName}/AggregateId/{id}',
-    handler: function(req, reply) {
-      loadCollection(req.params.collectionName, function(collection) {
-        collection.find({AggregateId: req.params.id}, {sort: [['_id', -1]]}).toArray(function(e, results){
-          if (e) return reply(e)
-          reply(results)
+    path: '/collections/{collectionName}/AggregateId/{value}',
+    config: {
+      jsonp: 'callback',
+      handler: function(req, reply) {
+        loadCollection(req.params.collectionName, function(collection) {
+          collection.find({AggregateId: req.params.value}, {sort: [['_id', -1]]}).toArray(function(e, results){
+            if (e) return reply(e);
+            
+            //reply('JSON_CALLBACK (' + JSON.stringify(results) + ');');
+            reply(results);
+          })
         })
-      })
+      }
     }
   },
     {
