@@ -1,0 +1,6 @@
+var coll=db.getCollection("MetricAggregatesDailyView"); coll.remove({});
+var coll=db.getCollection("MetricAggregatesDailyView"); coll.find();
+var coll=db.getCollection("MetricAggregatesWeeklyView"); coll.remove({});
+var coll=db.getCollection("MetricAggregatesMonthlyView"); coll.remove({});
+var coll=db.getCollection("MetricAggregatesQuarterlyView"); coll.remove({});
+var coll=db.getCollection("MetricAggregatesYearlyView"); coll.remove({});

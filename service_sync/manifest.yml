@@ -1,0 +1,12 @@
+---
+# This is an extremely basic manifest file. 
+# Note that the name is always required while other fields are optional. 
+applications:
+- name: Metrics-DataSync-Service
+  mem: 128M
+  disk: 2048M
+  services:
+    Enote-db:
+      type: mongodb
+    Enote-fs:
+      type: filesystem
