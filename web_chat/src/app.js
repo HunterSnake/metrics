@@ -3,10 +3,8 @@
 angular.module('myApp', ['myChart'])
 
 // Main application controller
-// .controller('MainCtrl', ["$scope", "d3", "SimpleHttpLoader", "StringParser", "Classifier",
-//   function ($scope, d3, SimpleHttpLoader, StringParser, Classifier) {
-.controller('MainCtrl', ["$scope", "$http", "d3", "SimpleHttpLoader",
-  function ($scope, $http, d3, SimpleHttpLoader) {
+.controller('MainCtrl', ["$scope", "$http", "d3", 
+  function ($scope, $http, d3) {
     $scope.display = {
       cursor: []
     };
