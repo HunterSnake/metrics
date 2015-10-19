@@ -66,7 +66,7 @@ server.route([
     handler: function(req, reply) {
       loadCollection(req.params.collectionName, function(collection) {
         req.payload.inTime = new Date();
-        console.log(req.payload);
+        //console.log(req.payload);
         collection.insert(req.payload, {}, function(e, results){
           if (e){ 
             console.log(e);
@@ -115,7 +115,7 @@ server.route([
       })
     }
   },
-    {
+  {
     method: 'DELETE',
     path: '/collections/{collectionName}/{id}',
     handler: function(req, reply) {
@@ -123,6 +123,18 @@ server.route([
         collection.remove({_id: id(req.params.id)}, function(e, result){
            if (e) return reply(e)
            reply((result === 1) ? {msg:'success'} : {msg:'error'})
+         })
+      })
+    }
+  },
+  {
+    method: 'DELETE',
+    path: '/collections/{collectionName}',
+    handler: function(req, reply) {
+      loadCollection(req.params.collectionName, function(collection) {
+        collection.remove({}, function(e, result){
+           if (e) return reply(e)
+           reply((result > 0) ? {msg:'success, delete ' + result + 'records'} : {msg:'error'})
          })
       })
     }
