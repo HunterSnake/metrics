@@ -129,7 +129,7 @@ server.route([
   },
   {
     method: 'DELETE',
-    path: '/collections/{collectionName}',
+    path: '/collections/{collectionName}/clean',
     handler: function(req, reply) {
       loadCollection(req.params.collectionName, function(collection) {
         collection.remove({}, function(e, result){

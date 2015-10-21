@@ -4,10 +4,6 @@
 		"selected_items":
 		[
 			[
-				"month",
-				"monthName"
-			],
-			[
 				"notifi",
 				"Notifications"
 			],
@@ -44,34 +40,18 @@
 	"buffers":
 	[
 		{
-			"file": "web_chat/index.html",
+			"file": "service_sync/app.js",
 			"settings":
 			{
-				"buffer_size": 9355,
+				"buffer_size": 4502,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "web_chat/css/style.css",
+			"file": "service_sync/sqlupdate.sql",
 			"settings":
 			{
-				"buffer_size": 93273,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "web_chat/src/chart.js",
-			"settings":
-			{
-				"buffer_size": 26138,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "web_chat/js/scripts.js",
-			"settings":
-			{
-				"buffer_size": 2561,
+				"buffer_size": 1018,
 				"line_ending": "Windows"
 			}
 		}
@@ -83,7 +63,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 150.0,
 		"last_filter": "pc",
 		"selected_items":
 		[
@@ -92,7 +72,7 @@
 				"Package Control: List Packages"
 			]
 		],
-		"width": 512.0
+		"width": 461.0
 	},
 	"console":
 	{
@@ -113,25 +93,15 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Metrics/web_chat",
-		"/C/Metrics/web_chat/css",
-		"/C/Metrics/web_chat/files",
-		"/C/Metrics/web_chat/js",
-		"/C/Metrics/web_chat/lib",
-		"/C/Metrics/web_chat/node_modules",
-		"/C/Metrics/web_chat/src"
+		"/C/Metrics/service_sync",
+		"/C/Metrics/service_sync/node_modules"
 	],
 	"file_history":
 	[
-		"/C/Metrics/web_chat/src/app.js",
-		"/C/Users/huanchan/Desktop/startMongo.cmd",
-		"/C/Metrics/web_chat/js/scripts.js",
-		"/C/Metrics/web_chat/index2.html",
+		"/C/code/MetricsDataSync/MetricsDataSyncConsole/bin/Debug/MetricsDataSyncConsole.exe.config",
 		"/C/Metrics/web_chat/index.html",
+		"/C/Metrics/web_chat/src/app.js",
 		"/C/Metrics/web_chat/src/chart.js",
-		"/C/Users/huanchan/AppData/Roaming/Sublime Text 3/Installed Packages/HTMLBeautify.sublime-package",
-		"/C/Users/huanchan/AppData/Roaming/Sublime Text 3/Packages/User/HTMLBeautify.sublime-settings",
-		"/C/Users/huanchan/AppData/Roaming/Sublime Text 3/Packages/HTMLBeautify/HTMLBeautify.sublime-settings",
 		"/C/Metrics/web_chat/server.js",
 		"/C/Metrics/push/_web/server.js",
 		"/C/Metrics/push/_web/src/app.js",
@@ -143,6 +113,7 @@
 		"/C/Metrics/push/_web/index.html",
 		"/C/Metrics/.gitignore",
 		"/C/Metrics/push/_sync/Procfile",
+		"/C/Users/huanchan/Desktop/startMongo.cmd",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_03_Code/02 - jsonp/index.html",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_03_Code/02 - jsonp/jsonp.js",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_03_Code/02 - jsonp/jsonp.spec.js",
@@ -231,6 +202,8 @@
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_02_Code/08 - testing - a controller test/admin-projects.js",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_02_Code/07 - testing - services - a notificationsArchive test/test.html",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_02_Code/07 - testing - services - a notificationsArchive test/archive.js",
+		"/C/Users/huanchan/AppData/Roaming/Sublime Text 3/Packages/User/HTMLBeautify.sublime-settings",
+		"/C/Users/huanchan/AppData/Roaming/Sublime Text 3/Packages/HTMLBeautify/HTMLBeautify.sublime-settings",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_02_Code/06 - testing - simple Jasmine test/helloWorld.js",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_02_Code/06 - testing - simple Jasmine test/helloWorld.spec.js",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_02_Code/06 - testing - simple Jasmine test/test.html",
@@ -250,7 +223,9 @@
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/15 - Modules and services - one big bag of services - step 2/app.js",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/14 - Modules and services - one big bag of services - step 1/index.html",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/15 - Modules and services - one big bag of services - step 2/index.html",
-		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/13 - DI - run blocks - uptime example/index.html"
+		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/13 - DI - run blocks - uptime example/index.html",
+		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/13 - DI - run blocks - uptime example/app.js",
+		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/12 - DI - notifications service as a provider/app.js"
 	],
 	"find":
 	{
@@ -308,90 +283,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "web_chat/index.html",
+					"file": "service_sync/app.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9355,
+						"buffer_size": 4502,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1392,
-								1392
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 1,
-					"file": "web_chat/css/style.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 93273,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								20115,
-								20115
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 14409.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "web_chat/src/chart.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 26138,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4734,
-								4734
+								3702,
+								3702
 							]
 						],
 						"settings":
@@ -401,40 +310,38 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 90.0,
+						"translation.y": 1350.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "web_chat/js/scripts.js",
-					"semi_transient": false,
+					"buffer": 1,
+					"file": "service_sync/sqlupdate.sql",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 2561,
+						"buffer_size": 1018,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								693,
-								857
+								905,
+								905
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/SQL/SQL.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 495.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -446,7 +353,7 @@
 	},
 	"input":
 	{
-		"height": 31.0
+		"height": 0.0
 	},
 	"layout":
 	{
@@ -457,18 +364,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.437180423667,
 			1.0
 		],
 		"rows":
@@ -483,7 +383,7 @@
 		"height": 0.0
 	},
 	"pinned_build_system": "",
-	"project": "chat.sublime-project",
+	"project": "service_data.sublime-project",
 	"replace":
 	{
 		"height": 86.0
@@ -516,7 +416,7 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},

@@ -11,6 +11,37 @@ angular.module('myChart', [])
   return d3;
 })
 
+.factory('MaxYAxis',  function(){
+  return function(maxYAxis) {
+    var reMaxVal = 0;
+    if(maxYAxis > 3000)
+    {
+      reMaxVal = maxYAxis + 1000;
+    }
+    else if(maxYAxis > 1000)
+    {
+      reMaxVal = maxYAxis +  500;
+    }
+    else if(maxYAxis > 500)
+    {
+      reMaxVal = maxYAxis +  200;
+    }
+    else if(maxYAxis > 100)
+    {
+      reMaxVal = maxYAxis +  50;
+    }
+    else if(maxYAxis > 30)
+    {
+      reMaxVal = maxYAxis + 10;
+    }
+    else
+    {
+      reMaxVal = maxYAxis +  5;
+    }
+    return reMaxVal;
+  };
+})
+
 .filter('gte_date', function(){
   return function(input, raw_date){
     var date = new Date(raw_date);
@@ -148,7 +179,7 @@ angular.module('myChart', [])
         );
 
         // Define the dimensions for the chart
-        var width = 200, height = 50;
+        var width = 900, height = 50;
 
         // Return the link function
         return function(scope, element, attrs) {
@@ -174,8 +205,8 @@ angular.module('myChart', [])
 
 
 // Line Chart directive
-.directive('myLineChart', ["d3",
-  function(d3){
+.directive('myLineChart', ["d3", "MaxYAxis",
+  function(d3, MaxYAxis){
 
     function draw(svg, width, height, data) {
 
@@ -208,9 +239,11 @@ angular.module('myChart', [])
         .tickSize(height - 2*margin, 0, 0)
         .tickFormat("");
 
+      var maxYAxis = MaxYAxis(d3.max(data, function(d) { return d.y; }));
+
       // Define y-scale
       var yScale = d3.time.scale()
-        .domain([0, d3.max(data, function(d) { return d.y; })])
+        .domain([0, maxYAxis])
         .range([height-margin, margin]);
 
       // Define y-axis
@@ -248,7 +281,7 @@ angular.module('myChart', [])
 
       var easing = d3.ease('cubic');
       var ease_type = 'cubic';
-      var max = d3.max(data, function(d){ return d.y; });
+      var max = maxYAxis;
       var duration = 2500;
 
       // Draw data points
@@ -337,7 +370,7 @@ angular.module('myChart', [])
         var vMargin = 3;
         var xMin = d3.min(data, function(d) { return d.x; });
         var xMax = d3.max(data, function(d) { return d.x; });
-        var yMax = d3.max(data, function(d) { return d.y; });
+        var yMax = d3.max(data, function(d) { return d.y; }) + 1000;
 
         if (index == 0 || index >= data.length) {
           return;
@@ -525,8 +558,8 @@ angular.module('myChart', [])
 }])
 
 // Bar Chart directive
-.directive('myBarChart', ["d3", "$filter",
-  function(d3, $filter){
+.directive('myBarChart', ["d3", "$filter", "MaxYAxis",
+  function(d3, $filter, MaxYAxis){
 
     function draw(svg, width, height, data, dispatch) {
 
@@ -559,9 +592,12 @@ angular.module('myChart', [])
         .tickSize(height - 2*margin, 0, 0)
         .tickFormat("");
 
+      var maxYAxis = d3.max(data, function(d) { return d.y; });
+      maxYAxis = MaxYAxis(maxYAxis);
+
       // Define y-scale
       var yScale = d3.time.scale()
-        .domain([0, d3.max(data, function(d) { return d.y; })])
+        .domain([0, maxYAxis])
         .range([height-margin, margin]);
 
       // Define y-axis
@@ -609,7 +645,7 @@ angular.module('myChart', [])
 
       var easing = d3.ease('cubic');
       var ease_type = 'cubic';
-      var max = d3.max(data, function(d){ return d.y; });
+      var max = maxYAxis;
       var duration = 2500;
 
       svg.select('.data')

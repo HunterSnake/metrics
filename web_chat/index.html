@@ -1,49 +1,172 @@
-<html ng-app="myApp"> 
-  <head> 
-    <!-- Include 3rd party libraries -->
-    <script src="lib/d3/d3.js" charset="UTF-8"></script>
-    <script src="lib/angular/angular.js" charset="UTF-8"></script>
-
-    <!-- Include the application files -->
-    <script src="src/app.js"></script>
-    <link href="src/app.css" rel="stylesheet">
-    
-    <!-- Include Bootstrap -->
-    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Include the files of the chart component -->
-    <script src="src/chart.js"></script>
-    <link href="src/chart.css" rel="stylesheet">
-
-  </head>
-  <body> 
-    
-    <div class="container">
-
-      <div ng-controller="MainCtrl">
-
-        <div>
-          <my-brush-chart class="chart blue" data="log.data" brush="display.date"></my-brush-chart>
-        </div>
-
-        <div>
-          <span>Cursor:</span>
-          <span>
-            {{ display.cursor[0] | date : 'dd.MM.yyyy HH:mm' }}
-          </span> 
-          <span>
-            {{ display.cursor[1] | number:2 }}
-          </span>
-        </div>
-
-        <my-line-chart class="chart blue" data="log.data" cursor="display.cursor">
-        </my-line-chart>
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ENote - Metrics</title>
+        <!-- Bootstrap CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- bootstrap theme -->
+        <link href="css/bootstrap-theme.css" rel="stylesheet">
+        <!-- font icon -->
+        <link href="css/elegant-icons-style.css" rel="stylesheet" />
+        <link href="css/font-awesome.min.css" rel="stylesheet" />
         
-        <my-bar-chart class="chart blue" data="log.data" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]">
-        </my-bar-chart>
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/style-responsive.css" rel="stylesheet" />
 
-        
-      </div>
-    </div>
-  </body> 
+        <!-- chart css -->
+        <link href="src/app.css" rel="stylesheet">
+        <link href="src/chart.css" rel="stylesheet">
+
+        <script src="js/jquery.js"></script>
+
+        <!-- chart script -->
+        <script src="js/d3.js" charset="UTF-8"></script>
+        <script src="js/angular.js" charset="UTF-8"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="src/app.js"></script>
+        <script src="src/chart.js"></script>
+    </head>
+    <body>
+        <!-- container section start -->
+        <section id="container" class="">
+            <header class="header green-bg">
+                <div class="toggle-nav">
+                    <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+                </div>
+                <!--logo start-->
+                <a href="javascript:;" class="logo">Enote <span class="lite">Metrics</span></a>
+                <!--logo end-->
+            </header>
+            <!--header end-->
+            <!--sidebar start-->
+            <aside>
+                <div id="sidebar"  class="nav-collapse ">
+                    <!-- sidebar menu start-->
+                    <ul class="sidebar-menu">
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <span class="text">Total Messages Sent</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="javascript:;">Weely View</a></li>
+                                <li><a class="" href="javascript:;">Monthly View</a></li>
+                                <li><a class="" href="javascript:;">Quarty View</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <span class="text">Requests By CompanyCode</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="javascript:;">Weely View</a></li>
+                                <li><a class="" href="javascript:;">Monthly View</a></li>
+                                <li><a class="" href="javascript:;">Quarty View</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <span class="text">Onboarded People</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="javascript:;">Weely View</a></li>
+                                <li><a class="" href="javascript:;">Monthly View</a></li>
+                                <li><a class="" href="javascript:;">Quarty View</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <span class="text">Messages By Receiver Type and Status</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="javascript:;">Weely View</a></li>
+                                <li><a class="" href="javascript:;">Monthly View</a></li>
+                                <li><a class="" href="javascript:;">Quarty View</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <span class="text">Requests By External System Type</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="javascript:;">Weely View</a></li>
+                                <li><a class="" href="javascript:;">Monthly View</a></li>
+                                <li><a class="" href="javascript:;">Quarty View</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;" class="">
+                                <span class="text">Requests By External System Type and Status</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                            <ul class="sub">
+                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="javascript:;">Weely View</a></li>
+                                <li><a class="" href="javascript:;">Monthly View</a></li>
+                                <li><a class="" href="javascript:;">Quarty View</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- sidebar menu end-->
+                </div>
+            </aside>
+            <!--sidebar end-->
+            
+            <!--main content start-->
+            <section id="main-content">
+                <section class="wrapper" ng-controller="MainCtrl">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h3 class="page-header"><i class="fa fa-laptop"></i> Total Messages Sent - Daily View </h3>
+                            <!-- <ol class="breadcrumb">
+                                <li><i class="fa fa-home"></i><a href="javascript:;">Home</a></li>
+                                <li><i class="fa fa-laptop"></i>Total Messages Sent</li>
+                                <li><i class="fa fa-leaf"></i>DailyView</li>
+                            </ol> -->
+                        </div>
+                        <div class="col-md-9">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <my-brush-chart class="chart blue" data="log.data" brush="display.date"></my-brush-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <my-bar-chart class="chart blue" data="log.data" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]"></my-bar-chart>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <my-line-chart class="chart blue" data="log.data" cursor="display.cursor"></my-line-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <!--main content end-->
+        </section>
+       
+        <!--custome script for all page-->
+        <script src="js/scripts.js"></script>
+        <!-- custom script for this page-->
+    </body>
 </html>

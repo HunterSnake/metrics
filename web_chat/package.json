@@ -1,7 +1,9 @@
 {
-  "name": "webserver-monitor",
+  "name": "Metrics-web-chart",
   "version": "0.0.1",
-  "description": "Webserver Monitor Application",
+  "description": "a prototype for metrics chart",
+  "main": "server.js",
+  "author": "Hunter H",
   "dependencies": {
     "express": "^4.10.2",
     "serve-static": "^1.8.1",
