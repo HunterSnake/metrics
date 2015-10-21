@@ -162,6 +162,8 @@ angular.module('myChart', [])
       },
       compile: function( element, attrs, transclude ) {
 
+        //console.log(element[0].parentElement.offsetWidth);
+
         // Create a SVG root element
         var svg = d3.select(element[0]).append('svg');
 
@@ -179,7 +181,7 @@ angular.module('myChart', [])
         );
 
         // Define the dimensions for the chart
-        var width = 900, height = 50;
+        var width = element[0].parentElement.offsetWidth - 30, height = 50;
 
         // Return the link function
         return function(scope, element, attrs) {
@@ -539,7 +541,15 @@ angular.module('myChart', [])
 
 
         // Define the dimensions for the chart
-        var width = 800, height = 300;
+        var width = element[0].parentElement.offsetWidth - 30, height = 300;
+
+        // svg.append("text")
+        // .attr("transform", "rotate(-90)")
+        // .attr("y", 30)
+        // .attr("x",0 - (height / 2))
+        // .attr("dy", "1em")
+        // .style("text-anchor", "middle")
+        // .text("Hit Points");
 
         // Return the link function
         return function(scope, element, attrs) {
@@ -577,7 +587,7 @@ angular.module('myChart', [])
       // Define x scale
       var xScale = d3.time.scale()
         .domain(d3.extent(data, function(d) { return d.x; }))
-        .range([margin, width-margin]);
+        .range([margin, width-margin-60]);
 
       // Define x-axis
       var xAxis = d3.svg.axis()
@@ -615,22 +625,22 @@ angular.module('myChart', [])
 
       // Draw the x-axis
       svg.select('.x-axis')
-        .attr("transform", "translate(0, " + (height-margin) + ")")
+        .attr("transform", "translate(60, " + (height-margin) + ")")
         .call(xAxis);
       
       // Draw the y-axis
       svg.select('.y-axis')
-        .attr("transform", "translate(" + margin + ")")
+        .attr("transform", "translate(" + (margin + 60) + ")")
         .call(yAxis);
 
       // Draw the x-grid
       svg.select('.x-grid')
-        .attr("transform", "translate(0, " + margin + ")")
+        .attr("transform", "translate(60, " + margin+ ")")
         .call(xGrid);
       
       // Draw the y-grid
       svg.select('.y-grid')
-        .attr("transform", "translate(" + margin + ")")
+        .attr("transform", "translate(" + (margin + 60) + ")")
         .call(yGrid);
 
       /* ---- Draw bars ---- */
@@ -651,7 +661,7 @@ angular.module('myChart', [])
       svg.select('.data')
         .selectAll('rect').data(data)
         .attr('r', 2.5)
-        .attr('x', function(d) { return xScale(d.x) - barWidth*0.5; })
+        .attr('x', function(d) { return xScale(d.x) - barWidth*0.5 + 60; })
         .attr('y', function(d) { return yScale(0); })
         .attr('width', function(d) { return barWidth; })
         .attr('height', 0)
@@ -834,7 +844,15 @@ angular.module('myChart', [])
         var dispatch = d3.dispatch("cursorchange");
 
         // Define the dimensions for the chart
-        var width = 800, height = 300;
+        var width = element[0].parentElement.offsetWidth - 30, height = 300;
+
+        svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 30)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Hit Points");
 
         // Return the link function
         return function(scope, element, attrs) {
