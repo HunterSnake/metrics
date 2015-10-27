@@ -20,8 +20,8 @@ angular.module('myApp', ['myChart'])
 
       // Source of the log file
       //src: 'http://localhost:3000/files/access.log',
-      src: 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
-      //src: 'http://metrics-datasync-service.15.126.130.219.xip.io/collections/MetricAggregatesDailyView/AggregateId/7?callback=JSON_CALLBACK',
+      //src: 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
+      src: 'http://metrics-datasync-service.15.126.130.219.xip.io/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
 
       // Data entries
       data: [],
