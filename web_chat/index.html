@@ -28,7 +28,7 @@
         <script src="src/app.js"></script>
         <script src="src/chart.js"></script>
     </head>
-    <body>
+    <body ng-controller="MainCtrl">
         <!-- container section start -->
         <section id="container" class="">
             <header class="header green-bg">
@@ -36,8 +36,9 @@
                     <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
                 </div>
                 <!--logo start-->
-                <a href="javascript:;" class="logo">Enote <span class="lite">Metrics</span></a>
+                <a href="javascript:;" class="logo">Enote <span class="lite">Metrics</span> {{selectedRoute}}</a>
                 <!--logo end-->
+
             </header>
             <!--header end-->
             <!--sidebar start-->
@@ -51,7 +52,7 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="/index.html#1">Daily View</a></li>
                                 <li><a class="" href="javascript:;">Weekly View</a></li>
                                 <li><a class="" href="javascript:;">Monthly View</a></li>
                                 <li><a class="" href="javascript:;">Quarterly View</a></li>
@@ -63,7 +64,7 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="/index.html#2">Daily View</a></li>
                                 <li><a class="" href="javascript:;">Weekly View</a></li>
                                 <li><a class="" href="javascript:;">Monthly View</a></li>
                                 <li><a class="" href="javascript:;">Quarterly View</a></li>
@@ -75,7 +76,7 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="/index.html#5">Daily View</a></li>
                                 <li><a class="" href="javascript:;">Weekly View</a></li>
                                 <li><a class="" href="javascript:;">Monthly View</a></li>
                                 <li><a class="" href="javascript:;">Quarterly View</a></li>
@@ -87,7 +88,7 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="/index.html#6">Daily View</a></li>
                                 <li><a class="" href="javascript:;">Weekly View</a></li>
                                 <li><a class="" href="javascript:;">Monthly View</a></li>
                                 <li><a class="" href="javascript:;">Quarterly View</a></li>
@@ -99,7 +100,7 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="/index.html#7">Daily View</a></li>
                                 <li><a class="" href="javascript:;">Weekly View</a></li>
                                 <li><a class="" href="javascript:;">Monthly View</a></li>
                                 <li><a class="" href="javascript:;">Quarterly View</a></li>
@@ -111,7 +112,7 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="javascript:;">Daily View</a></li>
+                                <li><a class="" href="/index.html#8">Daily View</a></li>
                                 <li><a class="" href="javascript:;">Weekly View</a></li>
                                 <li><a class="" href="javascript:;">Monthly View</a></li>
                                 <li><a class="" href="javascript:;">Quarterly View</a></li>
@@ -125,10 +126,10 @@
             
             <!--main content start-->
             <section id="main-content">
-                <section class="wrapper" ng-controller="MainCtrl">
+                <section class="wrapper">
                     <div class="row">
                         <div class="col-md-3">
-                            <h3 class="page-header"><i class="fa fa-laptop"></i> Total Messages Sent - Daily View </h3>
+                            <h3 class="page-header"><i class="fa fa-laptop"></i> {{chartTitle}} - Daily View </h3>
                             <!-- <ol class="breadcrumb">
                                 <li><i class="fa fa-home"></i><a href="javascript:;">Home</a></li>
                                 <li><i class="fa fa-laptop"></i>Total Messages Sent</li>

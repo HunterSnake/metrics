@@ -10,8 +10,8 @@ angular.module('myApp', ['myChart'])
 })
 
 // Main application controller
-.controller('MainCtrl', ["$scope", "$http", "d3", "MonthIndex",
-  function ($scope, $http, d3, MonthIndex) {
+.controller('MainCtrl', ["$scope", "$http", "$location", "d3", "MonthIndex",
+  function ($scope, $http, $location, d3, MonthIndex) {
     $scope.display = {
       cursor: []
     };
@@ -20,20 +20,23 @@ angular.module('myApp', ['myChart'])
 
       // Source of the log file
       //src: 'http://localhost:3000/files/access.log',
-      //src: 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
-      src: 'http://metrics-datasync-service.15.126.130.219.xip.io/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
+      src: 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
+      //src: 'http://metrics-datasync-service.15.126.130.219.xip.io/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
 
       // Data entries
       data: [],
 
     };
 
-    $http
-      .jsonp($scope.log.src)
+    $scope.selectedRoute = 'aaa';
+
+    function loadData(src)
+    {
+      $http
+      .jsonp(src)
       .success(function (data) {
         console.log(data);
         var grouped = data.map(function(d){
-          var months = ['August', 'September', 'October'];
           return{
             x: new Date(d.YearName, MonthIndex(d.MonthName), d.DayOfMonth),
             y: d.MetricValue - 0
@@ -45,5 +48,21 @@ angular.module('myApp', ['myChart'])
       }).error(function(data, status, headers, config){
         throw new Error('Something went wrong...'+status);
       });
+    }
+
+    $scope.chartTitle = 'Total Messages Sent';
+
+    $scope.$watch(function () {
+      return $location.path();
+    }, function (newPath) {
+      $scope.log.src = 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId'+newPath+'?callback=JSON_CALLBACK'
+      $scope.selectedRoute = newPath;
+      var pathIndex = ['/1','/2','/5','/6','/7','/8'];
+      var pathName = ['Total Messages Sent','Requests By CompanyCode','Onboarded People','Messages By Receiver Type and Status','Requests By External System Type','Requests By External System Type and Status'];
+      $scope.chartTitle = pathName[pathIndex.indexOf(newPath)];
+      loadData($scope.log.src);
+    });
+
+    loadData($scope.log.src);    
   }
 ]);

@@ -14,7 +14,19 @@ angular.module('myChart', [])
 .factory('MaxYAxis',  function(){
   return function(maxYAxis) {
     var reMaxVal = 0;
-    if(maxYAxis > 3000)
+    if(maxYAxis > 100000)
+    {
+      reMaxVal = maxYAxis + 20000;
+    }
+    else if(maxYAxis > 50000)
+    {
+      reMaxVal = maxYAxis + 10000;
+    }
+    else if(maxYAxis > 10000)
+    {
+      reMaxVal = maxYAxis + 5000;
+    }
+    else if(maxYAxis > 3000)
     {
       reMaxVal = maxYAxis + 1000;
     }

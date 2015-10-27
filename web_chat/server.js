@@ -9,44 +9,44 @@ var io = require('socket.io')(http);
 app.use(serveStatic('.', {'index': ['index.html']}));
 
 // Wait for socket connection
-io.on('connection', function(socket){
+// io.on('connection', function(socket){
 
-    var watchers = [];
+//     var watchers = [];
 
-    // Send the content of a file to the client
-    var sendFile = function(name, path) {
-        // Read the file
-        fs.readFile(path, 'utf8', function (err, data) {
-            // Emit the content of the file
-            io.emit(name, data);
-        });
-    };
+//     // Send the content of a file to the client
+//     var sendFile = function(name, path) {
+//         // Read the file
+//         fs.readFile(path, 'utf8', function (err, data) {
+//             // Emit the content of the file
+//             io.emit(name, data);
+//         });
+//     };
 
-    // Wait for events on socket
-    socket.on('watch', function(obj){
+//     // Wait for events on socket
+//     socket.on('watch', function(obj){
         
-        if (!watchers.hasOwnProperty(obj.name)){
+//         if (!watchers.hasOwnProperty(obj.name)){
         
-            console.log("Watching " + obj.name);
+//             console.log("Watching " + obj.name);
 
-            watchers[obj.name] = obj;
+//             watchers[obj.name] = obj;
             
-            sendFile(obj.name, obj.path);
+//             sendFile(obj.name, obj.path);
 
-            // Watch the file for changes
-            fs.watchFile(obj.path, function (curr, prev) {
+//             // Watch the file for changes
+//             fs.watchFile(obj.path, function (curr, prev) {
                 
-                sendFile(obj.name, obj.path);
-            });
-        }
-    });
+//                 sendFile(obj.name, obj.path);
+//             });
+//         }
+//     });
 
-    socket.on('disconnect', function(){
-        watchers.forEach(function(obj) {
-            fs.unwatchFile(obj.path);
-        });
-    });
-});
+//     socket.on('disconnect', function(){
+//         watchers.forEach(function(obj) {
+//             fs.unwatchFile(obj.path);
+//         });
+//     });
+// });
 
 var listenPort = process.env.PORT || 3000;
 http.listen(listenPort, function(){
