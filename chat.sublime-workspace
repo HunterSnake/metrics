@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"$lo",
+				"$location	AngularJS"
+			],
+			[
 				"month",
 				"monthName"
 			],
@@ -43,6 +47,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "web_chat/src/app.js",
+			"settings":
+			{
+				"buffer_size": 2243,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -84,15 +96,17 @@
 		"/C/Metrics/web_chat",
 		"/C/Metrics/web_chat/files",
 		"/C/Metrics/web_chat/js",
-		"/C/Metrics/web_chat/lib/angular",
 		"/C/Metrics/web_chat/node_modules",
 		"/C/Metrics/web_chat/src"
 	],
 	"file_history":
 	[
-		"/C/Metrics/web_chat/src/chart.js",
-		"/C/Metrics/web_chat/src/app.js",
 		"/C/Metrics/web_chat/index.html",
+		"/C/Metrics/web_chat/src/chart.js",
+		"/C/Metrics/web_chat/AggregateType",
+		"/C/Metrics/web_chat/index_back.html",
+		"/C/Metrics/web_chat/server.js",
+		"/C/Metrics/web_chat/src/app.js",
 		"/C/Metrics/web_chat/js/scripts.js",
 		"/C/Metrics/web_chat/css/style.css",
 		"/C/Users/huanchan/Desktop/startMongo.cmd",
@@ -100,7 +114,6 @@
 		"/C/Users/huanchan/AppData/Roaming/Sublime Text 3/Installed Packages/HTMLBeautify.sublime-package",
 		"/C/Users/huanchan/AppData/Roaming/Sublime Text 3/Packages/User/HTMLBeautify.sublime-settings",
 		"/C/Users/huanchan/AppData/Roaming/Sublime Text 3/Packages/HTMLBeautify/HTMLBeautify.sublime-settings",
-		"/C/Metrics/web_chat/server.js",
 		"/C/Metrics/push/_web/server.js",
 		"/C/Metrics/push/_web/src/app.js",
 		"/C/Metrics/push/_web/manifest.yml",
@@ -215,9 +228,7 @@
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/16 - Modules and services - one big bag of services - services override/app.js",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/16 - Modules and services - one big bag of services - services override/index.html",
 		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/14 - Modules and services - one big bag of services - step 1/app.js",
-		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/15 - Modules and services - one big bag of services - step 2/app.js",
-		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/14 - Modules and services - one big bag of services - step 1/index.html",
-		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/15 - Modules and services - one big bag of services - step 2/index.html"
+		"/C/Users/huanchan/Documents/BookCode/AngleJS/精通 AngularJS/1820OS_01_Code/15 - Modules and services - one big bag of services - step 2/app.js"
 	],
 	"find":
 	{
@@ -285,8 +296,39 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "web_chat/src/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2243,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2110,
+								2120
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 225.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
