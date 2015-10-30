@@ -54,6 +54,14 @@
 				"buffer_size": 2243,
 				"line_ending": "Windows"
 			}
+		},
+		{
+			"file": "web_chat/index.html",
+			"settings":
+			{
+				"buffer_size": 9402,
+				"line_ending": "Windows"
+			}
 		}
 	],
 	"build_system": "",
@@ -296,7 +304,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -320,6 +328,36 @@
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 225.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "web_chat/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2515,
+								2515
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,

@@ -50,12 +50,20 @@
 
 .blue .data-line {
 	fill: none;
-	stroke:steelblue;
 	stroke-width: 2;
 }
 
+.blue{
+  stroke:steelblue;
+  fill: steelblue;
+}
+
+.data-line, .data-bar, .data-area{
+  fill:#00B388;
+  stroke:#00B388;
+}
+
 .blue .data-area {
-	fill: steelblue;
 	fill-opacity:0.3;
 	stroke: none;
 }
@@ -68,8 +76,6 @@
 }
 
 .blue .data-bar {
-	fill: steelblue;
 	fill-opacity:0.3;
-	stroke: steelblue;
 	stroke-width: 1;
 }
