@@ -20,31 +20,41 @@ angular.module('myApp', ['myChart'])
 
       // Source of the log file
       //src: 'http://localhost:3000/files/access.log',
-      src: 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
-      //src: 'http://metrics-datasync-service.15.126.130.219.xip.io/collections/MetricAggregatesDailyView/AggregateId/1?callback=JSON_CALLBACK',
+      src: 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId',
+      //src: 'http://metrics-datasync-service.15.126.130.219.xip.io/collections/MetricAggregatesDailyView/AggregateId',
 
       // Data entries
       data: [],
 
     };
 
-    $scope.selectedRoute = 'aaa';
-
     function loadData(src)
     {
       $http
       .jsonp(src)
       .success(function (data) {
-        console.log(data);
         var grouped = data.map(function(d){
           return{
             x: new Date(d.YearName, MonthIndex(d.MonthName), d.DayOfMonth),
             y: d.MetricValue - 0
           }
         });
-
-        // Use the grouped data for the chart
-        $scope.log.data = grouped;
+        //combined the same date data
+        var results = [];
+        var keys = {};
+        for(var i=0; i<grouped.length; i++)
+        {
+          if(angular.isUndefined(keys[grouped[i].x])){
+            keys[grouped[i].x] = results.length;
+            results.push(grouped[i]);
+          }
+          else{
+            var index = keys[grouped[i].x];
+            results[index].y = results[index].y + grouped[i].y;
+          }
+        }
+        // Use the grouped & uniqued data for the chart
+        $scope.log.data = results;
       }).error(function(data, status, headers, config){
         throw new Error('Something went wrong...'+status);
       });
@@ -54,15 +64,20 @@ angular.module('myApp', ['myChart'])
 
     $scope.$watch(function () {
       return $location.path();
-    }, function (newPath) {
-      $scope.log.src = 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId'+newPath+'?callback=JSON_CALLBACK'
-      $scope.selectedRoute = newPath;
+    }, function (newPath) {     
       var pathIndex = ['/1','/2','/5','/6','/7','/8'];
       var pathName = ['Total Messages Sent','Requests By CompanyCode','Onboarded People','Messages By Receiver Type and Status','Requests By External System Type','Requests By External System Type and Status'];
-      $scope.chartTitle = pathName[pathIndex.indexOf(newPath)];
-      loadData($scope.log.src);
+      if(newPath != ''){
+        $scope.display = {
+          cursor: []
+        };
+        $scope.chartTitle = pathName[pathIndex.indexOf(newPath)];
+        loadData($scope.log.src + newPath+'?callback=JSON_CALLBACK');
+      }
+      else{
+        $scope.chartTitle = pathName[0];
+        loadData($scope.log.src + '/1?callback=JSON_CALLBACK');
+      }
     });
-
-    loadData($scope.log.src);    
   }
 ]);

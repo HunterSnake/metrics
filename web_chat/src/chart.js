@@ -13,44 +13,9 @@ angular.module('myChart', [])
 
 .factory('MaxYAxis',  function(){
   return function(maxYAxis) {
-    var reMaxVal = 0;
-    if(maxYAxis > 100000)
-    {
-      reMaxVal = maxYAxis + 20000;
-    }
-    else if(maxYAxis > 50000)
-    {
-      reMaxVal = maxYAxis + 10000;
-    }
-    else if(maxYAxis > 10000)
-    {
-      reMaxVal = maxYAxis + 5000;
-    }
-    else if(maxYAxis > 3000)
-    {
-      reMaxVal = maxYAxis + 1000;
-    }
-    else if(maxYAxis > 1000)
-    {
-      reMaxVal = maxYAxis +  500;
-    }
-    else if(maxYAxis > 500)
-    {
-      reMaxVal = maxYAxis +  200;
-    }
-    else if(maxYAxis > 100)
-    {
-      reMaxVal = maxYAxis +  50;
-    }
-    else if(maxYAxis > 30)
-    {
-      reMaxVal = maxYAxis + 10;
-    }
-    else
-    {
-      reMaxVal = maxYAxis +  5;
-    }
-    return reMaxVal;
+    var reMaxVal = Math.ceil(maxYAxis / 10);
+    if(reMaxVal < 1) reMaxVal = 1;
+    return reMaxVal + maxYAxis;
   };
 })
 
