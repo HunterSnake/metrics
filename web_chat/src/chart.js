@@ -162,7 +162,6 @@ angular.module('myChart', [])
 
         // Return the link function
         return function(scope, element, attrs) {
-
           dispatch.on('brush', function(brush){ 
             scope.$apply(function(){
               scope.brush = brush.extent();
@@ -622,7 +621,9 @@ angular.module('myChart', [])
 
       /* ---- Draw bars ---- */
 
-      var barWidth = (width-2*margin)/data.length;
+      
+
+      var barWidth = (width-2*margin-60)/(1.4*data.length);
 
       svg.select('.data')
         .selectAll('rect').data(data)
@@ -670,6 +671,7 @@ angular.module('myChart', [])
         var xValue = xScale.invert(pos[0]);
         var xBisect = d3.bisector(function(d) { return d.x; }).left;
         var index = xBisect(data, xValue);
+        console.log("index:"+index+" datalength:"+data.length);
         
         var hMargin = -8;
         var vMargin = 3;

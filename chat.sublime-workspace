@@ -55,7 +55,7 @@
 			"file": "web_chat/src/chart.js",
 			"settings":
 			{
-				"buffer_size": 26461,
+				"buffer_size": 26541,
 				"line_ending": "Windows"
 			}
 		},
@@ -63,7 +63,7 @@
 			"file": "web_chat/src/app.js",
 			"settings":
 			{
-				"buffer_size": 2580,
+				"buffer_size": 2639,
 				"line_ending": "Windows"
 			}
 		},
@@ -71,7 +71,7 @@
 			"file": "web_chat/index.html",
 			"settings":
 			{
-				"buffer_size": 9384,
+				"buffer_size": 9383,
 				"line_ending": "Windows"
 			}
 		}
@@ -113,7 +113,6 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Metrics/web_chat",
 		"/C/Metrics/web_chat/files",
 		"/C/Metrics/web_chat/js",
 		"/C/Metrics/web_chat/node_modules",
@@ -270,6 +269,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"startDate",
 			"Quarty",
 			"Weely",
 			"panel-body",
@@ -316,7 +316,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -325,15 +325,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 26461,
+						"buffer_size": 26541,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								353,
-								353
+								4165,
+								4165
 							]
 						],
 						"settings":
@@ -343,19 +343,19 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 150.0,
+						"translation.y": 2187.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
 					"file": "web_chat/src/app.js",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2580,
+						"buffer_size": 2639,
 						"regions":
 						{
 						},
@@ -376,7 +376,7 @@
 						"translation.y": 135.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -385,15 +385,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9384,
+						"buffer_size": 9383,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3239,
-								3239
+								8007,
+								8014
 							]
 						],
 						"settings":
@@ -403,7 +403,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 405.0,
+						"translation.y": 690.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
