@@ -3,3 +3,7 @@ html, body {
 	font-family: 'Helvetica', sans-serif;
 	font-size: 12px;
 }
+
+.btn-default.active{
+    background-color:rgba(66, 85, 99, 0.6)
+}
