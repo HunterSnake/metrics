@@ -60,18 +60,18 @@
 			}
 		},
 		{
-			"file": "web_chat/src/app.js",
-			"settings":
-			{
-				"buffer_size": 2639,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "web_chat/index.html",
 			"settings":
 			{
 				"buffer_size": 9383,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Total Messages Sent ,Requests By CompanyCode ,Onboarded People ,Messages By Receiver Type and Status ,Requests By External System Type ,Requests By External System Type and Status",
+			"settings":
+			{
+				"buffer_size": 179,
 				"line_ending": "Windows"
 			}
 		}
@@ -89,7 +89,7 @@
 		[
 			[
 				"pc",
-				"Package Control: List Packages"
+				"Package Control: Install Package"
 			]
 		],
 		"width": 512.0
@@ -113,6 +113,7 @@
 	},
 	"expanded_folders":
 	[
+		"/C/Metrics/web_chat",
 		"/C/Metrics/web_chat/files",
 		"/C/Metrics/web_chat/js",
 		"/C/Metrics/web_chat/node_modules",
@@ -269,6 +270,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"</span>\n                                <span class=\"menu-arrow arrow_carrot-right\"></span>\n                            </a>\n                            <ul class=\"sub\">\n                                <li><a class=\"\" href=\"/index.html#5\">Daily View</a></li>\n                                <li><a class=\"\" href=\"javascript:;\">Weekly View</a></li>\n                                <li><a class=\"\" href=\"javascript:;\">Monthly View</a></li>\n                                <li><a class=\"\" href=\"javascript:;\">Quarterly View</a></li>\n                            </ul>\n                        </li>\n",
+			"                        <li class=\"sub-menu\">\n                            <a href=\"javascript:;\" class=\"\">\n                                <span class=\"text\">",
 			"startDate",
 			"Quarty",
 			"Weely",
@@ -302,6 +305,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"\n",
 			"%d:%b\n",
 			"lib",
 			"../../",
@@ -332,8 +336,8 @@
 						"selection":
 						[
 							[
-								4165,
-								4165
+								4369,
+								4369
 							]
 						],
 						"settings":
@@ -343,7 +347,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2187.0,
+						"translation.y": 387.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -351,36 +355,6 @@
 				},
 				{
 					"buffer": 1,
-					"file": "web_chat/src/app.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2639,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								904,
-								904
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 135.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "web_chat/index.html",
 					"semi_transient": false,
 					"settings":
@@ -392,8 +366,8 @@
 						"selection":
 						[
 							[
-								8007,
-								8014
+								5088,
+								5136
 							]
 						],
 						"settings":
@@ -403,10 +377,39 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 690.0,
+						"translation.y": 1335.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 179,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								179,
+								179
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
