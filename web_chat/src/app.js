@@ -81,3 +81,7 @@ angular.module('myApp', ['myChart'])
     });
   }
 ]);
+
+function onChangeEvn(evnname) {
+    console.log(evnname);
+}
