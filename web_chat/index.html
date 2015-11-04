@@ -131,12 +131,22 @@
             <section id="main-content">
                 <section class="wrapper">
                     <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - Daily View </h3>
+                                <!-- <ol class="breadcrumb">
+                                    <li><i class="fa fa-home"></i><a href="javascript:;">Home</a></li>
+                                    <li><i class="fa fa-laptop"></i>Total Messages Sent</li>
+                                    <li><i class="fa fa-leaf"></i>DailyView</li>
+                                </ol> -->
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-3">
                             <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-default active" style="width:100px;">
                                     <input name="optionEvn" id="optionEvn" type="radio" value="all" onchange="onChangeEvn('all');"/>
                                     ALL DATA
-                                </label>
+                                </label> <br/><br/>
                                 <label class="btn btn-default" style="width:100px;">
                                     <input name="optionEvn" id="optionEvn" type="radio" value="eit100" onchange="onChangeEvn('eit100');" />
                                     EIT 100
@@ -150,12 +160,7 @@
                                     EIT 300
                                 </label>
                             </div>
-                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - Daily View </h3>
-                            <!-- <ol class="breadcrumb">
-                                <li><i class="fa fa-home"></i><a href="javascript:;">Home</a></li>
-                                <li><i class="fa fa-laptop"></i>Total Messages Sent</li>
-                                <li><i class="fa fa-leaf"></i>DailyView</li>
-                            </ol> -->
+                           
                         </div>
                         <div class="col-md-9">
                             <div class="panel panel-default">

@@ -547,7 +547,7 @@ angular.module('myChart', [])
 .directive('myBarChart', ["d3", "$filter", "MaxYAxis",
   function(d3, $filter, MaxYAxis){
 
-    function draw(svg, width, height, data, dispatch) {
+    function draw(svg, width, height, data) {
 
       if (data && !data.length) {
         return;
@@ -559,17 +559,18 @@ angular.module('myChart', [])
 
       // Define a margin
       var margin = 30;
+      var labelPadding = 20;
 
       // Define x scale
       var xScale = d3.time.scale()
         .domain(d3.extent(data, function(d) { return d.x; }))
-        .range([margin, width-margin-60]);
+        .range([margin + labelPadding, width-margin]);
 
       // Define x-axis
       var xAxis = d3.svg.axis()
         .scale(xScale)
         .orient('bottom')
-        .tickFormat(d3.time.format('%d/%b'));
+        .tickFormat(d3.time.format('%b %d'));
 
       // Define x-grid
       var xGrid = d3.svg.axis()
@@ -601,29 +602,29 @@ angular.module('myChart', [])
 
       // Draw the x-axis
       svg.select('.x-axis')
-        .attr("transform", "translate(60, " + (height-margin) + ")")
+        .attr("transform", "translate(0, " + (height-margin) + ")")
         .call(xAxis);
       
       // Draw the y-axis
       svg.select('.y-axis')
-        .attr("transform", "translate(" + (margin + 60) + ")")
+        .attr("transform", "translate(" + (margin + labelPadding) + ")")
         .call(yAxis);
 
       // Draw the x-grid
       svg.select('.x-grid')
-        .attr("transform", "translate(60, " + margin+ ")")
+        .attr("transform", "translate(0, " + margin+ ")")
         .call(xGrid);
       
       // Draw the y-grid
       svg.select('.y-grid')
-        .attr("transform", "translate(" + (margin + 60) + ")")
+        .attr("transform", "translate(" + (margin + labelPadding) + ")")
         .call(yGrid);
 
       /* ---- Draw bars ---- */
 
       
 
-      var barWidth = (width-2*margin-60)/(1.4*data.length);
+      var barWidth = (width-2*margin-labelPadding)/(1.4*data.length);
 
       svg.select('.data')
         .selectAll('rect').data(data)
@@ -639,7 +640,7 @@ angular.module('myChart', [])
       svg.select('.data')
         .selectAll('rect').data(data)
         .attr('r', 2.5)
-        .attr('x', function(d) { return xScale(d.x) - barWidth*0.5 + 60; })
+        .attr('x', function(d) { return xScale(d.x) - barWidth*0.5; })
         .attr('y', function(d) { return yScale(0); })
         .attr('width', function(d) { return barWidth; })
         .attr('height', 0)
@@ -657,99 +658,6 @@ angular.module('myChart', [])
         .remove();
 
       /* ---- Cursor ------- */
-      var xCursor = svg.select('.x-cursor');
-      var yCursor = svg.select('.y-cursor');
-      var activePoint = svg.select('.data-point-active');
-
-      var xLabel = svg.select('.x-label');
-      var yLabel = svg.select('.y-label');
-      var labelDuration = 10;
-
-      svg.on('mousemove', function(){
-
-        var pos = d3.mouse(this);
-        var xValue = xScale.invert(pos[0]);
-        var xBisect = d3.bisector(function(d) { return d.x; }).left;
-        var index = xBisect(data, xValue);
-        console.log("index:"+index+" datalength:"+data.length);
-        
-        var hMargin = -8;
-        var vMargin = 3;
-        var xMin = d3.min(data, function(d) { return d.x; });
-        var xMax = d3.max(data, function(d) { return d.x; });
-        var yMax = d3.max(data, function(d) { return d.y; });
-
-        if (index == 0 || index >= data.length) {
-          return;
-        }
-
-        // get the nearest value
-        var d0 = data[index - 1];
-        var d1 = data[index];
-
-        var d = xValue - d0.x > d1.x - xValue ? d1 : d0;
-        
-        if (d===undefined || !d.hasOwnProperty('x') || !d.hasOwnProperty('y')) {
-          return;
-        }
-
-        activePoint
-          .attr("cx", xScale(d.x))
-          .attr("cy", yScale(d.y))
-          .attr("r", 3);
-
-        xCursor
-          .attr('x1', xScale(d.x))
-          .attr('y1', yScale(0))
-          .attr('x2', xScale(d.x))
-          .attr('y2', yScale(yMax));
-      
-        yCursor
-          .attr('x1', xScale(xMin))
-          .attr('y1', yScale(d.y))
-          .attr('x2', xScale(xMax))
-          .attr('y2', yScale(d.y));
-
-        var xLeft = xScale(d.x) + vMargin;
-        var xTop = yScale(0);
-
-        var date = new Date(+d.x);
-        var format = d3.time.format('%d:%b');
-
-        xLabel
-          .transition()
-          .ease(easing)
-          .duration(labelDuration)
-          .attr('transform', 'translate('+xLeft+','+xTop+') rotate(-90)');
-
-        xLabel
-          .select('text')
-          .text(format(date));
-
-        xLabel
-          .select('path')
-          .style('display', 'block');
-
-        var yLeft = xScale(xMin);
-        var yTop = yScale(d.y) + vMargin;
-
-        yLabel
-          .transition()
-          .ease(easing)
-          .duration(labelDuration)
-          .attr('transform', 'translate('+yLeft+','+yTop+')');
-
-        yLabel
-          .select('text')
-          .text(d3.format('f')(d.y));
-
-        yLabel
-          .select('path')
-          .style('display', 'block');
-
-        // dispatch all cursor change events
-        dispatch.cursorchange([d.x, d.y]);       
-      });
     }
 
     function filter(data, minDate, maxDate) {
@@ -782,52 +690,19 @@ angular.module('myChart', [])
         var visCont = svg.append('g').attr('class', 'vis');
         var axisCont = visCont.append('g').attr('class', 'axis');
         var dataCont = visCont.append('g').attr('class', 'data');
-        var focusCont = visCont.append('g').attr('class', 'focus');
-        var cursorCont = axisCont.append('g').attr('class', 'cursor');
 
         axisCont.append('g').attr('class', 'x-grid grid');
         axisCont.append('g').attr('class', 'y-grid grid');
         
         axisCont.append('g').attr('class', 'x-axis axis');
         axisCont.append('g').attr('class', 'y-axis axis');
-        
-        cursorCont.append('line').attr('class', 'x-cursor cursor');
-        cursorCont.append('line').attr('class', 'y-cursor cursor');
-
-        dataCont.append('path').attr('class', 'data-line');
-        dataCont.append('path').attr('class', 'data-area');
-
-        focusCont.append('circle').attr('class', 'data-point-active');
-
-        var xLabelNode = focusCont.append('g').attr('class', 'x-label label');
-        var yLabelNode = focusCont.append('g').attr('class', 'y-label label');
-
-        // Path for the label shape
-        var tag_path = 'M 51.166,23.963 62.359,17.5 c 1.43,-0.824 1.43,-2.175 0,-3 L 51.166,8.037 48.568,1.537 2,1.4693227 2,30.576466 48.568,30.463 z';
-        
-        xLabelNode.append('path')
-          .style('display', 'none')
-          .attr('d', tag_path)
-          .attr('transform', 'translate(-30, -15) scale(0.7)');
-        xLabelNode.append('text')
-          .attr('transform', 'translate(-20)');
-
-        yLabelNode.append('path')
-          .style('display', 'none')
-          .attr('d', tag_path)
-          .attr('transform', 'translate(-30, -15) scale(0.7)');
-        yLabelNode.append('text')
-          .attr('transform', 'translate(-20)');
-
-        // Initialize the 'cursorchange' event
-        var dispatch = d3.dispatch("cursorchange");
 
         // Define the dimensions for the chart
         var width = element[0].parentElement.offsetWidth - 30, height = 300;
 
         svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 30)
+        .attr("y", -5)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
@@ -836,23 +711,13 @@ angular.module('myChart', [])
         // Return the link function
         return function(scope, element, attrs) {
 
-          /* Listen on cursor change */
-          dispatch.on('cursorchange', function(cursor) {
-
-            if (cursor){
-              scope.$apply(function() {
-                scope.cursor = cursor;
-              });
-            }
-          });
-
           // Watch the data attribute of the scope
           scope.$watch('[data, startDate, endDate]', function(newVal, oldVal, scope) {
             
             // Update the chart
             if (scope.data) {
               var data = filter(scope.data, scope.startDate, scope.endDate);
-              draw(svg, width, height, data, dispatch);
+              draw(svg, width, height, data);
             }
           }, true);
         };
