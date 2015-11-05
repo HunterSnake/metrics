@@ -549,7 +549,7 @@ angular.module('myChart', [])
 
     function draw(svg, width, height, data) {
 
-      if (data && !data.length) {
+      if (!data || !data.length) {
         return;
       }
 
@@ -561,10 +561,20 @@ angular.module('myChart', [])
       var margin = 30;
       var labelPadding = 20;
 
+      var dataExtent = d3.extent(data, function(d) { return d.x; });
+      var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+      dayNumber = Math.round(Math.abs((dataExtent[1].getTime() - dataExtent[0].getTime())/(oneDay)));
+
+      var barWidth = 1;
+      if(dayNumber > 0){
+        barWidth = Math.floor((width-2*margin-labelPadding)/(1.4*dayNumber));
+      }
+      //console.log("width="+width+", dayNumber=" +dayNumber+", barWidth=" + barWidth );
+
       // Define x scale
       var xScale = d3.time.scale()
-        .domain(d3.extent(data, function(d) { return d.x; }))
-        .range([margin + labelPadding, width-margin]);
+        .domain(dataExtent)
+        .range([margin + labelPadding + barWidth/2 + 2, width-margin]);
 
       // Define x-axis
       var xAxis = d3.svg.axis()
@@ -605,7 +615,7 @@ angular.module('myChart', [])
         .attr("transform", "translate(0, " + (height-margin) + ")")
         .call(xAxis);
       
-      // Draw the y-axis
+      //Draw the y-axis
       svg.select('.y-axis')
         .attr("transform", "translate(" + (margin + labelPadding) + ")")
         .call(yAxis);
@@ -622,10 +632,6 @@ angular.module('myChart', [])
 
       /* ---- Draw bars ---- */
 
-      
-
-      var barWidth = (width-2*margin-labelPadding)/(1.4*data.length);
-
       svg.select('.data')
         .selectAll('rect').data(data)
         .enter()
@@ -640,9 +646,9 @@ angular.module('myChart', [])
       svg.select('.data')
         .selectAll('rect').data(data)
         .attr('r', 2.5)
-        .attr('x', function(d) { return xScale(d.x) - barWidth*0.5; })
+        .attr('x', function(d) { return xScale(d.x) - barWidth/2; })
         .attr('y', function(d) { return yScale(0); })
-        .attr('width', function(d) { return barWidth; })
+        .attr('width', barWidth)
         .attr('height', 0)
         .transition()
         .duration(function(d, i){ return duration*(d.y/max); })
@@ -710,12 +716,10 @@ angular.module('myChart', [])
 
         // Return the link function
         return function(scope, element, attrs) {
-
           // Watch the data attribute of the scope
           scope.$watch('[data, startDate, endDate]', function(newVal, oldVal, scope) {
-            
             // Update the chart
-            if (scope.data) {
+            if (scope.data) {             
               var data = filter(scope.data, scope.startDate, scope.endDate);
               draw(svg, width, height, data);
             }

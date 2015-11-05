@@ -132,7 +132,7 @@
                 <section class="wrapper">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - Daily View </h3>
+                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - Daily View ( {{display.date[0] | date:"MMMM dd yyyy"}} - {{display.date[1] | date:"MMMM dd yyyy"}} )</h3>
                                 <!-- <ol class="breadcrumb">
                                     <li><i class="fa fa-home"></i><a href="javascript:;">Home</a></li>
                                     <li><i class="fa fa-laptop"></i>Total Messages Sent</li>
@@ -141,29 +141,36 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="height:118px">
                             <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-default active" style="width:100px;">
-                                    <input name="optionEvn" id="optionEvn" type="radio" value="all" onchange="onChangeEvn('all');"/>
+                                <label class="btn btn-default active" style="width:100px;" ng-click="changeEnvFunc('all')">
+                                    <input name="optionEvn" id="optionEvn" type="radio" value="all"/>
                                     ALL DATA
                                 </label> <br/><br/>
-                                <label class="btn btn-default" style="width:100px;">
-                                    <input name="optionEvn" id="optionEvn" type="radio" value="eit100" onchange="onChangeEvn('eit100');" />
+                                <label class="btn btn-default" style="width:100px;" ng-click="changeEnvFunc('eit100')">
+                                    <input name="optionEvn" id="optionEvn" type="radio" value="eit100"/>
                                     EIT 100
                                 </label>
-                                <label class="btn btn-default" style="width:100px;">
-                                    <input name="optionEvn" id="optionEvn" type="radio" value="eit200" onchange="onChangeEvn('eit200');" />
+                                <label class="btn btn-default" style="width:100px;" ng-click="changeEnvFunc('eit200')">
+                                    <input name="optionEvn" id="optionEvn" type="radio" value="eit200"/>
                                     EIT 200
                                 </label>
-                                <label class="btn btn-default" style="width:100px;">
-                                    <input name="optionEvn" id="optionEvn" type="radio" value="eit300" onchange="onChangeEvn('eit300');" />
+                                <label class="btn btn-default" style="width:100px;" ng-click="changeEnvFunc('eit300')">
+                                    <input name="optionEvn" id="optionEvn" type="radio" value="eit300"/>
                                     EIT 300
                                 </label>
                             </div>
-                           
+                            <!-- <div class="btn-group" data-toggle="buttons" ng-repeat="b in [{k:'all',v:'ALL DATA'}, {k:'eit100',v:'EIT 100'},{k:'eit200',v:'EIT 200'},{k:'eit300',v:'EIT 300'}]">
+                                <label class="btn btn-default" style="width:100px;">
+                                    <input name="optionEvn" id="optionEvn" type="radio" ng-model="selectEnv" 
+                                           value="{{b.k}}" />
+                                    {{b.v}}
+                                </label>
+                            </div> -->
+                          
                         </div>
                         <div class="col-md-9">
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" data-ng-show="log.showChart">
                                 <div class="panel-body">
                                     <my-brush-chart class="chart blue" data="log.data" brush="display.date"></my-brush-chart>
                                 </div>
@@ -173,8 +180,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-body">
+                                <div class="panel-body" data-ng-show="log.showChart">
                                     <my-bar-chart style="float:right;" class="chart blue" data="log.data" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]"></my-bar-chart>
+                                </div>
+                                <div class="panel-body" data-ng-hide="log.showChart">
+                                    <h1>There is no data in this instance for this aggrete type</h1>
                                 </div>
                             </div>
                         </div>
