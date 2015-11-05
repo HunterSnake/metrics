@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="js/jquery.js"></script>
+    <title></title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td style="width:100px;">View</td>
+            <td><select id="selView"><option value="MetricAggregatesDailyView">MetricAggregatesDailyView</option></select></td>
+        </tr>
+        <tr>
+            <td>AggregateId</td>
+            <td><select id="selAggregateId"><option value="1">1</option></select></td>
+        </tr>
+        <tr>
+            <td>Instance</td>
+            <td><input id="tbInstance" type="text" value="EIT100" /></td>
+        </tr>
+        <tr>
+            <td>Year</td>
+            <td><input id="tbYear" type="text" value="2015" /></td>
+        </tr>
+        <tr>
+            <td>StartMonth</td>
+            <td><select id="selStartMonth">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select></td>
+        </tr>
+        <tr>
+            <td>StartDay</td>
+            <td><input id="tbStartDay" type="text" value="1" /></td>
+        </tr>
+        <tr>
+            <td>EndMonth</td>
+            <td><select id="selEndMonth">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select></td>
+        </tr>
+        <tr>
+            <td>EndDay</td>
+            <td><input id="tbEndDay" type="text" value="30" /></td>
+        </tr>
+        <tr>
+            <td>StartValue</td>
+            <td><input id="tbStartValue" type="text" value="1" /></td>
+        </tr>
+        <tr>
+            <td>EndValue</td>
+            <td><input id="tbEndValue" type="text" value="10000" /></td>
+        </tr>
+    </table>
+    <input type="button" onclick="cleandata();" value="clean"/>
+    <input type="button" onclick="adddata();" value="add" />
+    <script type="text/javascript">
+        function cleandata() {
+            $.ajax({
+                url: 'http://localhost:8008/collections/MetricAggregatesDailyView/clean',
+                type: 'DELETE',
+                success: function (e) {
+                    alert(JSON.stringify(e));
+                }
+            });
+        }
+        var MONTH = ["January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December"];
+        function adddata() {
+            var view = document.getElementById("selView").value;
+            var AggregateId = document.getElementById("selAggregateId").value;
+            var Instance = document.getElementById("tbInstance").value;
+            var Year = document.getElementById("tbYear").value;
+
+            var StartMonth = document.getElementById("selStartMonth").value;
+            var StartDay = document.getElementById("tbStartDay").value;
+            var EndMonth = document.getElementById("selEndMonth").value;
+            var EndDay = document.getElementById("tbEndDay").value;
+
+            var StartValue = document.getElementById("tbStartValue").value;
+            var EndValue = document.getElementById("tbEndValue").value;
+            if (StartMonth > EndMonth || (StartMonth == EndMonth && StartDay > EndDay)) {
+                alert("时间不对");
+                return;
+            }
+            for (var i = StartMonth; i <= EndMonth; i++) {
+                sp = (i == StartMonth) ? StartDay : 1;
+                ep = (i == EndMonth) ? (parseInt(EndDay) + 1) : 31;
+                console.log(sp + " " + ep);
+                for (var j = sp ; j < ep; j++) {
+                    metricValue = Math.random() * (EndValue - StartValue) + StartValue;
+                    //console.log(MONTH[i - 1] + " " + j); 
+                    //continue;
+                    $.ajax({
+                        url: 'http://localhost:8008/collections/' + view,
+                        type: 'POST',
+                        data: { "AggregateId": AggregateId, "AggregateName": "Total Messages Sent", "ReportName": "Total Messages Sent for 18-October", "IsPercentage": "False", "NumGroupingColumns": "0", "GroupingValue": "", "SubGroupingValue": "", "MetricValue": Math.floor(metricValue), "YearName": Year, "MonthName": MONTH[i - 1], "DayOfMonth": j, "PushedFlag": "False", "DateParts": "301", "Instance": Instance },
+                        success: function (e) {
+                            console.log(JSON.stringify(e));
+                        }
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
