@@ -134,7 +134,7 @@ server.route([
       loadCollection(req.params.collectionName, function(collection) {
         collection.remove({}, function(e, result){
            if (e) return reply(e)
-           reply((result > 0) ? {msg:'success, delete ' + result + 'records'} : {msg:'error'})
+           reply((result > 0) ? {msg:'success, delete ' + result + 'records'} : {msg:'no data deleted'})
          })
       })
     }
