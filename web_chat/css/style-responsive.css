@@ -219,7 +219,9 @@
         margin-bottom: 0;
     }
 
-
+    ul.sidebar-menu li a span.text {
+        width: auto;
+    }
 
 }
 

@@ -559,7 +559,7 @@ angular.module('myChart', [])
 
       // Define a margin
       var margin = 30;
-      var labelPadding = 20;
+      var labelPadding = 50;
 
       var dataExtent = d3.extent(data, function(d) { return d.x; });
       var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
@@ -631,12 +631,34 @@ angular.module('myChart', [])
         .call(yGrid);
 
       /* ---- Draw bars ---- */
+      d3.select("#tooltip").classed("hidden", true);
 
       svg.select('.data')
         .selectAll('rect').data(data)
         .enter()
         .append('rect')
-        .attr('class', 'data-bar');
+        .attr('class', 'data-bar')
+        .on('click',function(d){
+          //Get this bar's x/y values, then augment for the tooltip
+          var xPosition = parseFloat(d3.select(this).attr("x")) + parseFloat(d3.select(this).attr("width")) / 2;
+          var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2;
+          if(xPosition > width - 180){
+            xPosition = width - 180;
+          }
+          //Update the tooltip position and value
+          d3.select("#tooltip")
+            .style("left", xPosition + "px")
+            .style("top", yPosition + "px")           
+            .select("#value")
+            .text($filter('date')(d.x,"MMMM dd yyyy") + '(' + d.y + ')');
+         
+          //Show the tooltip
+          d3.select("#tooltip").classed("hidden", false);
+          event.stopPropagation();
+        });
+      svg.on('click',function(){
+        d3.select("#tooltip").classed("hidden", true);
+      });
 
       var easing = d3.ease('cubic');
       var ease_type = 'cubic';
@@ -662,8 +684,6 @@ angular.module('myChart', [])
         .selectAll('rect').data(data)
         .exit()
         .remove();
-
-      /* ---- Cursor ------- */
     }
 
     function filter(data, minDate, maxDate) {
