@@ -110,9 +110,24 @@ angular.module('myApp', ['myChart'])
       }
     });
 
+<<<<<<< Updated upstream
     $scope.changeEnvFunc = function(newEnv){
       $scope.log.env = newEnv;
       filterData();
     }
   }
 ]);
+=======
+function onChangeEvn(evnname) {
+    console.log(evnname);
+    //$http({
+    //    url: 'http://localhost:8008/collections/MetricAggregatesDailyView/Clean',
+    //    method: 'DELETE'
+    //}).success(function (data, header, config, status) {
+    //    alert(JSON.stringify(data));
+
+    //}).error(function (data, header, config, status) {
+    //    //´¦ÀíÏìÓ¦Ê§°Ü
+    //});
+}
+>>>>>>> Stashed changes
