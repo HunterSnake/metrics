@@ -10,11 +10,13 @@ angular.module('myApp', ['myChart'])
 })
 
 // Main application controller
-.controller('MainCtrl', ["$scope", "$http", "$filter", "$location", "d3", "MonthIndex",
-  function ($scope, $http, $filter, $location, d3, MonthIndex) {
+.controller('MainCtrl', ["$scope", "$http", "$filter", "$location", "d3", "MonthIndex", "pieColorSet",
+  function ($scope, $http, $filter, $location, d3, MonthIndex, pieColorSet) {
     $scope.display = {
       cursor: []
     };
+
+    $scope.pieColorSet = pieColorSet;
 
 
     $scope.log = {

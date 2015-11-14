@@ -182,9 +182,18 @@
                             <div class="panel panel-default">
                                 <div class="panel-body" data-ng-show="log.showChart">
                                     <my-bar-chart style="float:right;" class="chart blue" data="log.data" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]"></my-bar-chart>
-                                    <div id="tooltip" class="hidden">
-                                        <p><strong>Hit Points</strong></p>
-                                        <p><span id="value">100</span></p>
+                                    <div id="tooltip" class="panel hidden">
+                                        <h3 class="panel-header" id="tipvalue"></h3>
+                                        <!-- <p style="padding-bottom:5px;"><span id="tipvalue"></span></p> -->
+                                        <div>
+                                            <ul>
+                                            <li><span ng-style="{'background-color': '{{pieColorSet[0]}}'}"></span> <strong>EIT100</strong></li>
+                                            <li><span ng-style="{'background-color': '{{pieColorSet[1]}}'}"></span> <strong>EIT200</strong></li>
+                                            <li><span ng-style="{'background-color': '{{pieColorSet[2]}}'}"></span> <strong>EIT300</strong></li>
+                                            <!-- <li ng-repeat="c in pieColorSet"><span ng-style="{background-color:c}"></span> <strong>EIT100</strong></li> -->
+                                            </ul>
+                                        </div>
+                                        <div><svg id="tipsvg" /></div>
                                     </div>
                                 </div>
                                 <div class="panel-body" data-ng-hide="log.showChart">

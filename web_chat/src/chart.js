@@ -19,6 +19,8 @@ angular.module('myChart', [])
   };
 })
 
+.constant('pieColorSet', ["#2AD2C9","#FF8D6D","#614767"])
+
 .filter('gte_date', function(){
   return function(input, raw_date){
     var date = new Date(raw_date);
@@ -39,7 +41,7 @@ angular.module('myChart', [])
 
 
 // Brush Chart directive
-.directive('myBrushChart', ["d3",
+.directive('myBrushChart', ["d3", 
   function(d3){
 
     function draw(svg, width, height, data, dispatch) {
@@ -544,8 +546,8 @@ angular.module('myChart', [])
 }])
 
 // Bar Chart directive
-.directive('myBarChart', ["d3", "$filter", "MaxYAxis",
-  function(d3, $filter, MaxYAxis){
+.directive('myBarChart', ["d3", "$filter", "MaxYAxis", "pieColorSet", 
+  function(d3, $filter, MaxYAxis, pieColorSet){
 
     function draw(svg, width, height, data) {
 
@@ -639,18 +641,70 @@ angular.module('myChart', [])
         .append('rect')
         .attr('class', 'data-bar')
         .on('click',function(d){
+          var w = 150;
+          var h = 150;
+
           //Get this bar's x/y values, then augment for the tooltip
           var xPosition = parseFloat(d3.select(this).attr("x")) + parseFloat(d3.select(this).attr("width")) / 2;
-          var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2;
+          var yPosition = height / 2 - h / 2;
           if(xPosition > width - 180){
             xPosition = width - 180;
           }
-          //Update the tooltip position and value
+          //Update the tooltip position and add svg
+
           d3.select("#tooltip")
             .style("left", xPosition + "px")
             .style("top", yPosition + "px")           
-            .select("#value")
-            .text($filter('date')(d.x,"MMMM dd yyyy") + '(' + d.y + ')');
+            .select("#tipvalue")
+            .text($filter('date')(d.x,"MMMM dd") + '(' + d.y + ')');
+
+          var psvg = d3.select("#tipsvg")
+            .attr("width", w)
+            .attr("height", h);
+
+          //draw pie chart in tooltip
+          var dataset = [ {"x":"5","y":"EIT100"},{"x":"11","y":"EIT200"},{"x":"22","y":"EIT300"}];
+          dataset.forEach(function(d) {
+              d.x = +d.x;
+            });
+
+          var outerRadius = w / 2;
+          var innerRadius = 0;
+          var arc = d3.svg.arc()
+                  .innerRadius(innerRadius)
+                  .outerRadius(outerRadius);
+          
+          var pie = d3.layout.pie()
+              .value(function(d) { return d.x; });
+
+          var color = d3.scale.ordinal().range(pieColorSet); //d3.scale.category10();
+
+          //Set up groups
+          var arcs = psvg.selectAll("g.arc")
+                  .data(pie(dataset))
+                  .enter()
+                  .append("g")
+                  .attr("class", "arc")
+                  .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+          
+          //Draw arc paths
+          arcs.append("path")
+              .attr("fill", function(d, i) {
+                return color(i);
+              })
+              .attr("d", arc);
+          var sumHits = d3.sum(dataset,function(d){ return +d.x; });
+          
+          //Labels
+          arcs.append("text")
+              .attr("transform", function(d) {
+                return "translate(" + arc.centroid(d) + ")";
+              })
+              .attr("text-anchor", "middle")
+              .text(function(d) {
+                var percent = Number(d.data.x)/sumHits * 100;
+                return percent.toFixed(1) + "%";
+              });
          
           //Show the tooltip
           d3.select("#tooltip").classed("hidden", false);
