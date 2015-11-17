@@ -19,6 +19,13 @@ angular.module('myChart', [])
   };
 })
 
+.factory('hideToolTip', ['d3', function(d3){
+  return function(){
+    d3.selectAll('.barHover').classed('barHover', false);
+    d3.select("#tooltip").classed("hidden", true);
+  };
+}])
+
 .constant('pieColorSet', ["#2AD2C9","#FF8D6D","#614767"])
 
 .filter('gte_date', function(){
@@ -546,8 +553,8 @@ angular.module('myChart', [])
 }])
 
 // Bar Chart directive
-.directive('myBarChart', ["d3", "$filter", "MaxYAxis", "pieColorSet", 
-  function(d3, $filter, MaxYAxis, pieColorSet){
+.directive('myBarChart', ["d3", "$filter", "MaxYAxis", "pieColorSet", "hideToolTip",
+  function(d3, $filter, MaxYAxis, pieColorSet, hideToolTip){
 
     function draw(svg, width, height, data) {
 
@@ -633,7 +640,7 @@ angular.module('myChart', [])
         .call(yGrid);
 
       /* ---- Draw bars ---- */
-      d3.select("#tooltip").classed("hidden", true);
+      hideToolTip();
 
       svg.select('.data')
         .selectAll('rect').data(data)
@@ -645,18 +652,30 @@ angular.module('myChart', [])
           var h = 150;
 
           //Get this bar's x/y values, then augment for the tooltip
-          var xPosition = parseFloat(d3.select(this).attr("x")) + parseFloat(d3.select(this).attr("width")) / 2;
-          var yPosition = height / 2 - h / 2;
-          if(xPosition > width - 180){
-            xPosition = width - 180;
+          var popParent = $("#tooltip").parent();
+          var clickBar = d3.select(this);
+          var xPosition = parseFloat(clickBar.attr("x")) + parseFloat(clickBar.attr("width")) + parseFloat(popParent.css('padding-left')) + parseFloat(popParent.position().left);
+          var tooltipWidth = 230;
+          if(xPosition > width - tooltipWidth){
+            xPosition = xPosition - tooltipWidth - parseFloat(clickBar.attr("width")) - 3.0;
           }
+          else{
+            xPosition += 3.0;
+          }
+
+          d3.selectAll('.barHover').classed('barHover', false);
+          clickBar.classed('barHover', true);
+
+          var yPosition = height / 2 - h / 2;
+          
+          
           //Update the tooltip position and add svg
 
           d3.select("#tooltip")
             .style("left", xPosition + "px")
             .style("top", yPosition + "px")           
             .select("#tipvalue")
-            .text($filter('date')(d.x,"MMMM dd") + '(' + d.y + ')');
+            .text($filter('date')(d.x,"dd-MMM-yyyy") + ' (' + d.y + ')');
 
           var psvg = d3.select("#tipsvg")
             .attr("width", w)
@@ -708,10 +727,10 @@ angular.module('myChart', [])
          
           //Show the tooltip
           d3.select("#tooltip").classed("hidden", false);
-          event.stopPropagation();
+          d3.event.stopPropagation();
         });
       svg.on('click',function(){
-        d3.select("#tooltip").classed("hidden", true);
+        hideToolTip();
       });
 
       var easing = d3.ease('cubic');
