@@ -1,0 +1,11 @@
+{
+  "name": "Metrics-DataSync-Service",
+  "version": "0.0.1",
+  "description": "A Data Sync Service Provide Rest Service for ENote app push data to Helion",
+  "main": "app.js",
+  "author": "Hunter H",
+  "dependencies": {
+    "hapi": "9.0.3",
+    "mongoose": "*"
+  }
+}
