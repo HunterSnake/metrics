@@ -180,22 +180,25 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-body" data-ng-show="log.showChart">
+                                <div class="panel-body" data-ng-show="log.showChart" style="height:350px;">
                                     <my-bar-chart style="float:right;" class="chart blue" data="log.data" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]"></my-bar-chart>
-                                    <div id="tooltip" class="panel hiddens">
+                                    <div id="tooltip" class="panel tooltip">
                                         <h5 class="panel-header" id="tipvalue"></h3>
-                                        <div ng-show="log.env==='all'">
-                                            <ul>
-                                            <li><span ng-style="{'background-color': '{{pieColorSet[0]}}'}"></span> <strong>EIT100</strong>
-                                            <br>11642</li>
-                                            <li><span ng-style="{'background-color': '{{pieColorSet[1]}}'}"></span> <strong>EIT200</strong>
-                                            <br>51994</li>
-                                            <li><span ng-style="{'background-color': '{{pieColorSet[2]}}'}"></span> <strong>EIT300</strong>
-                                            <br>25972</li>
-                                            <!-- <li ng-repeat="c in pieColorSet"><span ng-style="{background-color:c}"></span> <strong>EIT100</strong></li> -->
-                                            </ul>
+                                        <div style="border:1px" ng-show="log.env==='all'">
+                                            <div class="left">
+                                                <ul>
+                                                <li><span ng-style="{'background-color': '{{pieColorSet[0]}}'}"></span> <strong>EIT100</strong>
+                                                <br>11642</li>
+                                                <li><span ng-style="{'background-color': '{{pieColorSet[1]}}'}"></span> <strong>EIT200</strong>
+                                                <br>51994</li>
+                                                <li><span ng-style="{'background-color': '{{pieColorSet[2]}}'}"></span> <strong>EIT300</strong>
+                                                <br>25972</li>
+                                                <!-- <li ng-repeat="c in pieColorSet"><span ng-style="{background-color:c}"></span> <strong>EIT100</strong></li> -->
+                                                </ul>
+                                            </div>
+                                            <div class="left"><svg id="tipsvg" /></div>
+                                            <div class="tags_clear"></div>
                                         </div>
-                                        <div ng-show="log.env==='all'"><svg id="tipsvg" /></div>
                                     </div>
                                 </div>
                                 <div class="panel-body" data-ng-hide="log.showChart">

@@ -652,10 +652,10 @@ angular.module('myChart', [])
           var h = 150;
 
           //Get this bar's x/y values, then augment for the tooltip
-          var popParent = $("#tooltip").parent();
           var clickBar = d3.select(this);
-          var xPosition = parseFloat(clickBar.attr("x")) + parseFloat(clickBar.attr("width")) + parseFloat(popParent.css('padding-left')) + parseFloat(popParent.position().left);
-          var tooltipWidth = 240;
+          var xPosition = parseFloat(clickBar.attr("x")) + parseFloat(clickBar.attr("width"));
+          var tooltipWidth = 240; //parseFloat($("#tooltip").width());
+        
           if(xPosition > width - tooltipWidth){
             xPosition = xPosition - tooltipWidth - parseFloat(clickBar.attr("width")) - 3.0;
           }
@@ -666,7 +666,7 @@ angular.module('myChart', [])
           d3.selectAll('.barHover').classed('barHover', false);
           clickBar.classed('barHover', true);
 
-          var yPosition = height / 2 - h / 2;
+          var yPosition = 0 - (height/3 +  h);
           
           
           //Update the tooltip position and add svg
