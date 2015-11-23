@@ -55,10 +55,10 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="/index.html#1">Daily View</a></li>
-                                <li><a class="" href="javascript:;">Weekly View</a></li>
-                                <li><a class="" href="javascript:;">Monthly View</a></li>
-                                <li><a class="" href="javascript:;">Quarterly View</a></li>
+                                <li><a class="" href="/index.html#1" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -67,10 +67,10 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="/index.html#2">Daily View</a></li>
-                                <li><a class="" href="javascript:;">Weekly View</a></li>
-                                <li><a class="" href="javascript:;">Monthly View</a></li>
-                                <li><a class="" href="javascript:;">Quarterly View</a></li>
+                                <li><a class="" href="/index.html#2" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -79,10 +79,10 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="/index.html#5">Daily View</a></li>
-                                <li><a class="" href="javascript:;">Weekly View</a></li>
-                                <li><a class="" href="javascript:;">Monthly View</a></li>
-                                <li><a class="" href="javascript:;">Quarterly View</a></li>
+                                <li><a class="" href="/index.html#5" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -91,10 +91,10 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="/index.html#6">Daily View</a></li>
-                                <li><a class="" href="javascript:;">Weekly View</a></li>
-                                <li><a class="" href="javascript:;">Monthly View</a></li>
-                                <li><a class="" href="javascript:;">Quarterly View</a></li>
+                                <li><a class="" href="/index.html#6" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -103,10 +103,10 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="/index.html#7">Daily View</a></li>
-                                <li><a class="" href="javascript:;">Weekly View</a></li>
-                                <li><a class="" href="javascript:;">Monthly View</a></li>
-                                <li><a class="" href="javascript:;">Quarterly View</a></li>
+                                <li><a class="" href="/index.html#7" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -115,10 +115,10 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="/index.html#8">Daily View</a></li>
-                                <li><a class="" href="javascript:;">Weekly View</a></li>
-                                <li><a class="" href="javascript:;">Monthly View</a></li>
-                                <li><a class="" href="javascript:;">Quarterly View</a></li>
+                                <li><a class="" href="/index.html#8" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
+                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -129,10 +129,10 @@
             
             <!--main content start-->
             <section id="main-content">
-                <section class="wrapper">
+                <section class="wrapper" ng-hide="notReady">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - Daily View ( {{display.date[0] | date:"MMMM dd yyyy"}} - {{display.date[1] | date:"MMMM dd yyyy"}} )</h3>
+                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - Daily View ( {{display.date[0] | date:"dd-MMM-yyyy"}} to {{display.date[1] | date:"dd-MMM-yyyy"}} )</h3>
                                 <!-- <ol class="breadcrumb">
                                     <li><i class="fa fa-home"></i><a href="javascript:;">Home</a></li>
                                     <li><i class="fa fa-laptop"></i>Total Messages Sent</li>
@@ -141,21 +141,21 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3" style="height:118px">
+                        <div class="col-md-4" style="height:118px">
                             <div class="btn-group" data-toggle="buttons" style="width:100%">
-                                <label class="btn btn-default active" style="width:33%;" ng-click="changeEnvFunc('all')">
+                                <label class="btn btn-default active" style="width:50%;min-width:110px;" ng-click="changeEnvFunc('all')">
                                     <input name="optionEvn" id="optionEvn" type="radio" value="all"/>
                                     ALL DATA
                                 </label><br/><br/>
-                                <label class="btn btn-default" style="width:33%;" ng-click="changeEnvFunc('eit100')">
+                                <label class="btn btn-default" style="width:33%;min-width:90px;" ng-click="changeEnvFunc('eit100')">
                                     <input name="optionEvn" id="optionEvn" type="radio" value="eit100"/>
                                     EIT 100
                                 </label>
-                                <label class="btn btn-default" style="width:33%;" ng-click="changeEnvFunc('eit200')">
+                                <label class="btn btn-default" style="width:33%;min-width:90px;" ng-click="changeEnvFunc('eit200')">
                                     <input name="optionEvn" id="optionEvn" type="radio" value="eit200"/>
                                     EIT 200
                                 </label>
-                                <label class="btn btn-default" style="width:33%;" ng-click="changeEnvFunc('eit300')">
+                                <label class="btn btn-default" style="width:33%;min-width:90px;" ng-click="changeEnvFunc('eit300')">
                                     <input name="optionEvn" id="optionEvn" type="radio" value="eit300"/>
                                     EIT 300
                                 </label>
@@ -169,7 +169,7 @@
                             </div> -->
                           
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="panel panel-default" data-ng-show="log.showChart">
                                 <div class="panel-body">
                                     <my-brush-chart class="chart blue" data="log.data" brush="display.date"></my-brush-chart>
@@ -182,17 +182,20 @@
                             <div class="panel panel-default">
                                 <div class="panel-body" data-ng-show="log.showChart">
                                     <my-bar-chart style="float:right;" class="chart blue" data="log.data" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]"></my-bar-chart>
-                                    <div id="tooltip" class="panel hidden">
+                                    <div id="tooltip" class="panel hiddens">
                                         <h5 class="panel-header" id="tipvalue"></h3>
-                                        <div>
+                                        <div ng-show="log.env==='all'">
                                             <ul>
-                                            <li><span ng-style="{'background-color': '{{pieColorSet[0]}}'}"></span> <strong>EIT100</strong></li>
-                                            <li><span ng-style="{'background-color': '{{pieColorSet[1]}}'}"></span> <strong>EIT200</strong></li>
-                                            <li><span ng-style="{'background-color': '{{pieColorSet[2]}}'}"></span> <strong>EIT300</strong></li>
+                                            <li><span ng-style="{'background-color': '{{pieColorSet[0]}}'}"></span> <strong>EIT100</strong>
+                                            <br>11642</li>
+                                            <li><span ng-style="{'background-color': '{{pieColorSet[1]}}'}"></span> <strong>EIT200</strong>
+                                            <br>51994</li>
+                                            <li><span ng-style="{'background-color': '{{pieColorSet[2]}}'}"></span> <strong>EIT300</strong>
+                                            <br>25972</li>
                                             <!-- <li ng-repeat="c in pieColorSet"><span ng-style="{background-color:c}"></span> <strong>EIT100</strong></li> -->
                                             </ul>
                                         </div>
-                                        <div><svg id="tipsvg" /></div>
+                                        <div ng-show="log.env==='all'"><svg id="tipsvg" /></div>
                                     </div>
                                 </div>
                                 <div class="panel-body" data-ng-hide="log.showChart">
@@ -207,6 +210,15 @@
                                 </div>
                             </div>
                         </div> -->
+                    </div>
+                </section>
+                <section class="wrapper" ng-show="notReady">
+                    <div class="row">
+                        <div class="col-lg-12" style="padding-top:300px; text-align:center;">
+                            <div class="jumbotron">
+                            <img src="pic/building.jpg">
+                            </div>
+                        </div>
                     </div>
                 </section>
             </section>

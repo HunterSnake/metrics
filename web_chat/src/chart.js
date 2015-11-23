@@ -655,7 +655,7 @@ angular.module('myChart', [])
           var popParent = $("#tooltip").parent();
           var clickBar = d3.select(this);
           var xPosition = parseFloat(clickBar.attr("x")) + parseFloat(clickBar.attr("width")) + parseFloat(popParent.css('padding-left')) + parseFloat(popParent.position().left);
-          var tooltipWidth = 230;
+          var tooltipWidth = 240;
           if(xPosition > width - tooltipWidth){
             xPosition = xPosition - tooltipWidth - parseFloat(clickBar.attr("width")) - 3.0;
           }

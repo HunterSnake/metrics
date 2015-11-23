@@ -1,5 +1,5 @@
 var hapi = require('hapi'),
-  listenPort = process.env.PORT || 8009 ,
+  listenPort = process.env.PORT || 8008 ,
   server = new hapi.Server(),
   mongoose = require('mongoose'),
   models = require('./models');

@@ -91,7 +91,7 @@ rect.data-bar:hover, .barHover{
 
 #tooltip {
   position: absolute;
-  width: 230px;
+  width: 240px;
   height: auto;
   padding: 10px;
   background-color: white;
