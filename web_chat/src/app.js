@@ -15,6 +15,16 @@ angular.module('myApp', ['myChart'])
     $scope.display = {
       cursor: []
     };
+    $scope.toolTip = {
+      data:[]
+    };
+
+    $scope.toolTipFunc = function(data){
+      $scope.toolTip.data = data;
+      $scope.$apply();
+    }
+
+
 
     $scope.pieColorSet = pieColorSet;
 
@@ -69,7 +79,8 @@ angular.module('myApp', ['myChart'])
       var grouped = data.map(function(d){
         return{
           x: new Date(d.YearName, MonthIndex(d.MonthName), d.DayOfMonth),
-          y: d.MetricValue - 0
+          y: d.MetricValue - 0,
+          d: d.DateParts
         }
       });
       //combined the same date data
@@ -95,7 +106,6 @@ angular.module('myApp', ['myChart'])
           return 0;
         }
       })
-      console.log(results);
       $scope.log.showChart = results.length && results.length > 0;
       $scope.display.date = d3.extent(results, function(d) { return d.x; });
       $scope.log.data = results;

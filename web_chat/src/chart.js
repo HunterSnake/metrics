@@ -556,7 +556,7 @@ angular.module('myChart', [])
 .directive('myBarChart', ["d3", "$filter", "MaxYAxis", "pieColorSet", "hideToolTip",
   function(d3, $filter, MaxYAxis, pieColorSet, hideToolTip){
 
-    function draw(svg, width, height, data) {
+    function draw(svg, width, height, data, originalData, scope) {
 
       if (!data || !data.length) {
         return;
@@ -681,11 +681,36 @@ angular.module('myChart', [])
             .attr("width", w)
             .attr("height", h);
 
+          psvg.selectAll('g.arc').data([])
+            .exit()
+            .remove();
+
           //draw pie chart in tooltip
-          var dataset = [ {"x":"5","y":"EIT100"},{"x":"11","y":"EIT200"},{"x":"22","y":"EIT300"}];
-          dataset.forEach(function(d) {
-              d.x = +d.x;
-            });
+          var dataset = originalData.filter(function(e){
+            return e.DateParts == d.d;
+          }).map(function(d){
+            return{
+              x: +d.MetricValue,
+              y: d.Instance,
+              d: d.DateParts
+            }
+          });
+
+          var results = [];
+          var keys = {};
+          for(var i=0; i<dataset.length; i++)
+          {
+            if(angular.isUndefined(keys[dataset[i].y])){
+              keys[dataset[i].y] = results.length;
+              results.push(dataset[i]);
+            }
+            else{
+              var index = keys[dataset[i].y];
+              results[index].x += dataset[i].x;
+            }
+          }
+
+          scope.toolTipFunc(results);
 
           var outerRadius = w / 2;
           var innerRadius = 0;
@@ -700,7 +725,7 @@ angular.module('myChart', [])
 
           //Set up groups
           var arcs = psvg.selectAll("g.arc")
-                  .data(pie(dataset))
+                  .data(pie(results))
                   .enter()
                   .append("g")
                   .attr("class", "arc")
@@ -712,7 +737,7 @@ angular.module('myChart', [])
                 return color(i);
               })
               .attr("d", arc);
-          var sumHits = d3.sum(dataset,function(d){ return +d.x; });
+          var sumHits = d3.sum(results,function(d){ return +d.x; });
           
           //Labels
           arcs.append("text")
@@ -778,7 +803,8 @@ angular.module('myChart', [])
         data: '=',
         cursor: '=',
         startDate: '=',
-        endDate: '='
+        endDate: '=',
+        originalData: '='
       },
       compile: function( element, attrs, transclude ) {
 
@@ -810,11 +836,11 @@ angular.module('myChart', [])
         // Return the link function
         return function(scope, element, attrs) {
           // Watch the data attribute of the scope
-          scope.$watch('[data, startDate, endDate]', function(newVal, oldVal, scope) {
+          scope.$watch('[data, startDate, endDate, originalData]', function(newVal, oldVal, scope) {
             // Update the chart
-            if (scope.data) {             
+            if (scope.data) {
               var data = filter(scope.data, scope.startDate, scope.endDate);
-              draw(svg, width, height, data);
+              draw(svg, width, height, data, scope.originalData, scope.$parent);
             }
           }, true);
         };
