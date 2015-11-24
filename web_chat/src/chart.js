@@ -710,6 +710,16 @@ angular.module('myChart', [])
             }
           }
 
+          results.sort(function (a, b) {
+            if (a.y > b.y) {
+              return 1;
+            }
+            if (a.y < b.y) {
+              return -1;
+            }
+            return 0;
+          });
+
           scope.toolTipFunc(results);
 
           var outerRadius = w / 2;
