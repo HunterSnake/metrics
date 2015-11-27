@@ -26,8 +26,6 @@ angular.module('myChart', [])
   };
 }])
 
-.constant('pieColorSet', ["#2AD2C9","#FF8D6D","#614767"])
-
 .filter('gte_date', function(){
   return function(input, raw_date){
     var date = new Date(raw_date);
@@ -48,8 +46,8 @@ angular.module('myChart', [])
 
 
 // Brush Chart directive
-.directive('myBrushChart', ["d3", 
-  function(d3){
+.directive('myBrushChart', ["d3", "myData",
+  function(d3, myData){
 
     function draw(svg, width, height, data, dispatch) {
 
@@ -182,7 +180,7 @@ angular.module('myChart', [])
             
             // Update the chart
             if (scope.data) {
-              draw(svg, width, height, scope.data, dispatch);
+              draw(svg, width, height, myData.data, dispatch);
             }
           }, true);
         };
@@ -553,8 +551,8 @@ angular.module('myChart', [])
 }])
 
 // Bar Chart directive
-.directive('myBarChart', ["d3", "$filter", "MaxYAxis", "pieColorSet", "hideToolTip",
-  function(d3, $filter, MaxYAxis, pieColorSet, hideToolTip){
+.directive('myBarChart', ["d3", "$filter", "MaxYAxis", "config", "hideToolTip", "appUtilities",
+  function(d3, $filter, MaxYAxis, config, hideToolTip, appUtilities){
 
     function draw(svg, width, height, data, originalData, scope) {
 
@@ -696,19 +694,7 @@ angular.module('myChart', [])
             }
           });
 
-          var results = [];
-          var keys = {};
-          for(var i=0; i<dataset.length; i++)
-          {
-            if(angular.isUndefined(keys[dataset[i].y])){
-              keys[dataset[i].y] = results.length;
-              results.push(dataset[i]);
-            }
-            else{
-              var index = keys[dataset[i].y];
-              results[index].x += dataset[i].x;
-            }
-          }
+          var results = appUtilities.sumGroup(dataset, 'y', 'x');
 
           results.sort(function (a, b) {
             if (a.y > b.y) {
@@ -731,7 +717,7 @@ angular.module('myChart', [])
           var pie = d3.layout.pie()
               .value(function(d) { return d.x; });
 
-          var color = d3.scale.ordinal().range(pieColorSet); //d3.scale.category10();
+          var color = d3.scale.ordinal().range(config.pieColorSet); //d3.scale.category10();
 
           //Set up groups
           var arcs = psvg.selectAll("g.arc")

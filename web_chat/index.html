@@ -182,9 +182,9 @@
                           
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default" data-ng-show="log.showChart">
+                            <div class="panel panel-default" data-ng-show="data.showChart">
                                 <div class="panel-body">
-                                    <my-brush-chart class="chart blue" data="log.data" brush="display.date"></my-brush-chart>
+                                    <my-brush-chart class="chart blue" data="data.data" brush="display.date"></my-brush-chart>
                                 </div>
                             </div>
                         </div>
@@ -192,11 +192,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-body" data-ng-show="log.showChart" style="height:350px;">
-                                    <my-bar-chart class="chart blue" data="log.data" original-data="originalData" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]" td="toolTipData.d"></my-bar-chart>
+                                <div class="panel-body" data-ng-show="data.showChart" style="height:350px;">
+                                    <my-bar-chart class="chart blue" data="data.data" original-data="data.originalData" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]" td="toolTipData.d"></my-bar-chart>
                                     <div id="tooltip" class="panel tooltip">
                                         <h5 class="panel-header" id="tipvalue"></h3>
-                                        <div style="border:1px" ng-show="log.env==='all'">
+                                        <div style="border:1px" ng-show="data.env==='all'">
                                             <div class="left">
                                                 <ul>
                                                 <li data-ng-repeat="t in toolTip.data"><span ng-style="{'background-color': '{{pieColorSet[$index]}}'}"></span> <strong>{{t.y}}</strong>
@@ -208,7 +208,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel-body" data-ng-hide="log.showChart">
+                                <div class="panel-body" data-ng-hide="data.showChart">
                                     <h1>There is no data in this instance for this aggrete type</h1>
                                 </div>
                             </div>
