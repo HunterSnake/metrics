@@ -94,6 +94,15 @@ describe('controller test ->', function() {
                 expect(myData.data.length > 0).toEqual(true);
             });
 
+            it('should filter data by instance name',function(){
+                console.log(myData.data.length);
+                $location.path('/');
+                scope.$digest();
+                $httpBackend.flush();
+                var a = myData.data.length;
+                scope.changeEnvFunc('EIT100');
+                expect(myData.data.length < a).toBe(true);
+            });
         });
 
 
