@@ -92,8 +92,9 @@ rect.data-bar:hover, .barHover{
 .tooltip {
   clear: both;
   position: relative;
+  z-index: 999;
   opacity: 1;
-  width: 240px;
+  width: 420px;
   height: auto;
   padding: 10px;
   background-color: white;
@@ -103,7 +104,7 @@ rect.data-bar:hover, .barHover{
   -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
+  /*pointer-events: none;*/
 }
 
 .tooltip .panel-header{
@@ -119,15 +120,13 @@ rect.data-bar:hover, .barHover{
   text-align: center;
 }
 
-.tooltip .left{
-  float: left;
+path.slice{
+  stroke-width:2px;
 }
-.tooltip ul{
-  padding: 0px;
-}
-.tooltip ul li span{
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  /*background-color: #614767;*/
+
+polyline{
+  opacity: .3;
+  stroke: black;
+  stroke-width: 2px;
+  fill: none;
 }

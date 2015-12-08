@@ -24,6 +24,7 @@
         <!-- chart script -->
         <script src="js/d3.js" charset="UTF-8"></script>
         <script src="js/angular.js" charset="UTF-8"></script>
+        <script src="js/angular-animate.js" charset="UTF-8"></script>
         <script src="js/bootstrap.js"></script>
         <script src="src/app.js"></script>
         <script src="src/chart.js"></script>
@@ -193,18 +194,11 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body" data-ng-show="data.showChart" style="height:350px;">
-                                    <my-bar-chart class="chart blue" data="data.data" original-data="data.originalData" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]" td="toolTipData.d"></my-bar-chart>
+                                    <my-bar-chart class="chart blue" data="data.data" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]" td="toolTipData.d"></my-bar-chart>
                                     <div id="tooltip" class="panel tooltip">
-                                        <h5 class="panel-header" id="tipvalue"></h3>
-                                        <div style="border:1px" ng-show="data.env==='all'">
-                                            <div class="left">
-                                                <ul>
-                                                <li data-ng-repeat="t in toolTip.data"><span ng-style="{'background-color': '{{pieColorSet[$index]}}'}"></span> <strong>{{t.y}}</strong>
-                                                <br>{{t.x}}</li>
-                                                </ul>
-                                            </div>
-                                            <div class="left"><svg id="tipsvg" /></div>
-                                            <div class="tags_clear"></div>
+                                        <h5 class="panel-header">{{toolTipTitle}}</h3>
+                                        <div style="border:1px" ng-showsss="data.env==='all'">
+                                            <svg id="tipsvg" />
                                         </div>
                                     </div>
                                 </div>

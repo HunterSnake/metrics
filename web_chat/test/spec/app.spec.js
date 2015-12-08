@@ -25,6 +25,11 @@ describe('appUtilities test ->', function() {
             expect(arr2[0].y).toEqual(34);
             expect(arr2[1].y).toEqual(4);
         });
+        
+        it('for invalid data the sumGroup should return null',function(){
+            var invalidData = {a:4, b: 'xx'};
+            expect(appUtilities.sumGroup(invalidData)).toBe(null);
+        });
     });
 });
 

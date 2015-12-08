@@ -11,15 +11,33 @@ angular.module('myApp', ['myChart'])
   pieColorSet:["#2AD2C9","#FF8D6D","#614767"],
   MonthName:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 })
-.factory('myData', function(){
+.factory('myData', ['$filter','appUtilities', function($filter,appUtilities){
   return {
     originalData:[],
     data:[],
     env:'all',
     startDate:'',
-    endDate:''
+    endDate:'',
+    filter: function(dateparts, env){
+      var sf = $filter('uppercase');
+      if(!env){
+        env = this.env;
+      }
+      // get data
+      var dataset = this.originalData.filter(function(e){
+        return e.DateParts == dateparts && (env === 'all' || sf(env) === sf(e.Instance));
+      }).map(function(d){
+        return{
+          x: +d.MetricValue,
+          y: env === 'all'? d.Instance : d.GroupingValue + d.SubGroupingValue,
+          d: d.DateParts
+        }
+      });
+
+      return appUtilities.sumGroup(dataset, 'y', 'x');
+    }
   }
-})
+}])
 
 .factory('appUtilities',  ['config', function(config){
   return {
@@ -27,6 +45,10 @@ angular.module('myApp', ['myChart'])
         return config.MonthName.indexOf(monthName);
       },
     sumGroup: function(arr, p1, psum){
+      if(!angular.isArray(arr) && !arr.length)
+      {
+        return null;
+      }
       var results = [];
       var keys = {};
       for(var i=0; i<arr.length; i++)
@@ -46,17 +68,22 @@ angular.module('myApp', ['myChart'])
 }])
 
 // Main application controller
-.controller('MainCtrl', ["$scope", "$http", "$filter", "$location", "config", "d3", "appUtilities", "myData",
-  function ($scope, $http, $filter, $location, config, d3, appUtilities, myData) {
+.controller('MainCtrl', ["$scope", "$http", "$filter", "$location", "config", "d3", "appUtilities", "myData", "chartUtilities",
+  function ($scope, $http, $filter, $location, config, d3, appUtilities, myData, chartUtilities) {
     $scope.display = {
       cursor: []
     };
-    $scope.toolTip = {
-      data:[]
-    };
 
-    $scope.toolTipFunc = function(data){
-      $scope.toolTip.data = data;
+    $scope.toolTipFunc = function(date, hitPoints, env){
+      if(!env)
+      {
+        env = myData.env;
+      }
+
+      $scope.toolTipTitle = $filter('date')(date,"dd-MMM-yyyy") + ' (' + hitPoints + ')';
+      if(env != 'all'){
+        $scope.toolTipTitle =  $scope.toolTipTitle + ' in ' + env;
+      }
       $scope.$apply();
     }
 
@@ -138,10 +165,10 @@ angular.module('myApp', ['myChart'])
         loadData(config.src + config.pathMap[0].path +'?callback=JSON_CALLBACK');
       }
     });
-    
+   
     $scope.changeEnvFunc = function(newEnv){
       myData.env = newEnv;
       filterData();
-    }
+    };
   }
 ]);
