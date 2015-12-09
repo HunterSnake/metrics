@@ -42,9 +42,55 @@ angular.module('myChart', [])
       }
   };
 
-  var canClick = false;
+  var appendSlices = function(psvg, data, canClick){
+    var svg;
+    function initSvg(){
+      svg = psvg.attr("width", 400)
+          .attr("height", 200)
+          .append("g");
 
-  var appendSlices = function(svg, data, callByClick){
+      svg.append("g")
+        .attr("class", "slices");
+      svg.append("g")
+        .attr("class", "labels");
+      svg.append("g")
+        .attr("class", "lines");
+
+      svg.attr("transform", "translate(" + 200 + "," + 100 + ")");
+    }
+
+    if(data.length > 2){
+      data.sort(function(a, b){
+        return b.x - a.x;
+      });
+
+      var sumHits = d3.sum(data,function(d){ return +d.x; });
+      var i = 0;
+      for(i = 1; i < data.length; i++){
+        var percent = Math.floor(Number(data[i].x)/sumHits * 100);
+        if(percent < 5 && i < data.length - 1){
+          data[i].y = "others";
+          data[i].x = d3.sum(data.slice(i),function(d){ return +d.x; });
+          data = data.slice(0, i + 1);
+          break;
+        }
+      }
+    }
+
+    
+    if(psvg.selectAll("g")[0].length == 0){
+      initSvg();
+    }
+    else if(psvg.select('.slices').selectAll('path.slice')[0].length != data.length){
+      psvg.selectAll('g').data([])
+          .exit()
+          .remove();
+      initSvg();
+    }
+    else{
+      svg = psvg.select('g');
+    }
+
     var pie = d3.layout.pie()
             .value(function(d) { return d.x; });
     var w = 220, h = 180,
@@ -58,29 +104,10 @@ angular.module('myChart', [])
       .outerRadius(radius * 0.9);
 
     var color = d3.scale.category20c();
-
-    if(callByClick){
-      var oldSlices = svg.select(".slices").selectAll("path.slice");
-      oldSlices.transition().duration(1000).style("opacity","0").attr("pointer-events","none");
-      var oldLables = svg.select(".labels").selectAll("text");
-      oldLables.transition().duration(1000).style("opacity","0").attr("pointer-events","none");
-      var oldLines = svg.select(".lines").selectAll("polyline");
-      oldLines.transition().duration(1000).style("opacity","0").attr("pointer-events","none");
-
-      setTimeout(function(){
-            oldSlices.data([]).exit().remove();
-            oldLables.data([]).exit().remove();
-            oldLines.data([]).exit().remove();
-
-            var results = myData.filter(clickBar.d, clickChip.data.y);
-            appendSlices(svg, results, false);
-          }
-        ,1000);
-      return;
-    }
-    
+  
     /* ------- PIE SLICES -------*/
     var keyFunc = function(d){ 
+      console.log(d);
       return d.data.y; 
     };
 
@@ -108,29 +135,6 @@ angular.module('myChart', [])
     slice.exit()
       .remove();
 
-    /* ------- move the positions if two chips is too near --------------*/
-
-    var moveFlag = false;
-    var piedatas = pie(data);
-    if(piedatas.length > 2){
-      moveFlag = true;
-      var i = 0;
-      for(;i < piedatas.length;i ++){
-        piedatas[i].index = i;
-      }
-      piedatas.sort(function(a, b){
-        return a.startAngle - b.startAngle;
-      });
-      var step = 6.283 / piedatas.length;
-      for(i = 0; i < piedatas.length; i++){
-        piedatas[i].startAngle = i * step;
-        piedatas[i].endAngle = (i+1) * step;
-      }
-      piedatas.sort(function(a, b){
-        return a.index - b.index;
-      });
-    }
-
     /* ------- TEXT LABELS -------*/
     var text = svg.select(".labels").selectAll("text")
       .data(pie(data), keyFunc);
@@ -146,20 +150,10 @@ angular.module('myChart', [])
       return d.startAngle + (d.endAngle - d.startAngle)/2;
     }
 
-    i = 0;
-    var j = 0;
-
     text.transition().duration(1000)
       .attrTween("transform", function(d) {
-        var dcopy = $.extend(true,{},d);
-        if(moveFlag){
-          dcopy.startAngle = piedatas[i].startAngle;
-          dcopy.endAngle = piedatas[i].endAngle;
-          i++;
-        }
-
-        this._current = this._current || dcopy;
-        var interpolate = d3.interpolate(this._current, dcopy);
+        this._current = this._current || d;
+        var interpolate = d3.interpolate(this._current, d);
         this._current = interpolate(0);
         return function(t) {
           var d2 = interpolate(t);
@@ -169,15 +163,8 @@ angular.module('myChart', [])
         };
       })
       .styleTween("text-anchor", function(d){
-        var dcopy = $.extend(true,{},d);
-        if(moveFlag){
-          dcopy.startAngle = piedatas[j].startAngle;
-          dcopy.endAngle = piedatas[j].endAngle;
-          j++;
-        }
-
-        this._current = this._current || dcopy;
-        var interpolate = d3.interpolate(this._current, dcopy);
+        this._current = this._current || d;
+        var interpolate = d3.interpolate(this._current, d);
         this._current = interpolate(0);
         return function(t) {
           var d2 = interpolate(t);
@@ -199,26 +186,16 @@ angular.module('myChart', [])
       .append("polyline");
 
 
-    var k = 0;
     polyline.transition().duration(1000)
       .attrTween("points", function(d){
-        var dcopy = $.extend(true,{},d);
-        if(moveFlag){
-          dcopy.startAngle = piedatas[k].startAngle;
-          dcopy.endAngle = piedatas[k].endAngle;
-          k++;
-        }
-
         this._current = this._current || d;
         var interpolate = d3.interpolate(this._current, d);
-        var interpolate2 = d3.interpolate(this._current, dcopy);
         this._current = interpolate(0);
         return function(t) {
           var d2 = interpolate(t);
-          var dm2 = interpolate2(t);
-          var pos = outerArc.centroid(dm2);
-          pos[0] = radius * 0.95 * (midAngle(dm2) < Math.PI ? 1 : -1);
-          return [arc.centroid(d2), outerArc.centroid(dm2), pos];
+          var pos = outerArc.centroid(d2);
+          pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+          return [arc.centroid(d2), outerArc.centroid(d2), pos];
         };      
       });
     
@@ -229,7 +206,13 @@ angular.module('myChart', [])
       var clickFunc = function(d){
         clickChip = d;
         myScope.toolTipFunc(clickBar.x, d.data.x, d.data.y);
-        appendSlices(svg, [], true);
+        var results = myData.filter(clickBar.d, clickChip.data.y);
+        var psvg2 = d3.select("#tipsvg2");
+        psvg2.selectAll('g').data([])
+          .exit()
+          .remove();
+
+        appendSlices(psvg2, results, false);
       };
 
       slice.attr("cursor", "pointer")
@@ -238,7 +221,7 @@ angular.module('myChart', [])
         .on("click", clickFunc);
       polyline.attr("cursor", "pointer")
         .on("click", clickFunc);
-      canClick = false;
+      //canClick = false;
     }
   };
 
@@ -303,26 +286,9 @@ angular.module('myChart', [])
     CreatePieChart: function(psvg, data, clickflag, scope, bar){
       myScope = scope;
       clickBar = bar;
-      var svg;
-      if(psvg.selectAll("g")[0].length == 0){
-        svg = psvg.attr("width", 400)
-            .attr("height", 200)
-            .append("g");
-
-        svg.append("g")
-          .attr("class", "slices");
-        svg.append("g")
-          .attr("class", "labels");
-        svg.append("g")
-          .attr("class", "lines");
-
-        svg.attr("transform", "translate(" + 200 + "," + 100 + ")");
-      }
-      else{
-        svg = psvg.select('g');
-      }
-      canClick = clickflag;
-      appendSlices(svg, data, false);
+      
+      //canClick = clickflag;
+      appendSlices(psvg, data, clickflag);
     }
   };
 }])
@@ -608,6 +574,8 @@ angular.module('myChart', [])
           if(toolTip.hasClass("hidden")){
             toolTip
               .removeClass("hidden")
+              .css("display", "")
+              .css("opacity", 1)
               .css("left", xPosition + "px")
               .css("top", yPosition + "px");
           }
@@ -617,31 +585,15 @@ angular.module('myChart', [])
 
           scope.toolTipFunc(d.x, d.y);
 
-          // var sf = $filter('uppercase');
-
-          // // get data
-          // var dataset = myData.originalData.filter(function(e){
-          //   return e.DateParts == d.d && (myData.env === 'all' || sf(myData.env) === sf(e.Instance));
-          // }).map(function(d){
-          //   return{
-          //     x: +d.MetricValue,
-          //     y: myData.env === 'all'? d.Instance : d.GroupingValue + d.SubGroupingValue,
-          //     d: d.DateParts
-          //   }
-          // });
-
-          // var results = appUtilities.sumGroup(dataset, 'y', 'x');
-
           var results = myData.filter(d.d);
 
           //get svg and add pei chart
           var psvg = d3.select("#tipsvg1");
+          if(myData.env !== 'all'){
+            psvg = d3.select("#tipsvg2");
+          }
           chartUtilities.CreatePieChart(psvg, results, myData.env === 'all', scope, d);
-
           
-          // //Show the tooltip
-          // d3.select("#tooltip").classed("hidden", false);
-
           d3.event.stopPropagation();
         });
       svg.on('click',function(){
