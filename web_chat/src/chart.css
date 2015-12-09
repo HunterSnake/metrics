@@ -90,8 +90,9 @@ rect.data-bar:hover, .barHover{
 }
 
 .tooltip {
-  clear: both;
+  /*clear: both;*/
   position: relative;
+  overflow: hidden;
   z-index: 999;
   opacity: 1;
   width: 420px;
@@ -107,17 +108,25 @@ rect.data-bar:hover, .barHover{
   /*pointer-events: none;*/
 }
 
-.tooltip .panel-header{
-  text-align:center;
-}
-
-
 .tooltip p {
   margin: 0;
   font-family: sans-serif;
   font-size: 16px;
   line-height: 20px;
   text-align: center;
+}
+
+.tooltip .slider{
+  position: relative;
+  left:0;
+  width: 1300px;
+  padding: 0px;
+}
+
+.tooltip .panel{
+  width: 400px;
+  float: left;
+  margin: 0px 5px;
 }
 
 path.slice{
@@ -129,4 +138,18 @@ polyline{
   stroke: black;
   stroke-width: 2px;
   fill: none;
+}
+
+.popout {
+    animation: popout 1s ease;
+    -webkit-animation: popout 1s ease;
+}
+@keyframes popout {
+    from{transform:scale(0)}
+    /*80%{transform:scale(1.2)}*/
+    to{transform:scale(1)}
+}
+@-webkit-keyframes popout {
+    from{-webkit-transform:scale(0)}
+    to{-webkit-transform:scale(1)}
 }

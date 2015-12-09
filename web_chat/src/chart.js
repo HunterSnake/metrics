@@ -21,7 +21,11 @@ angular.module('myChart', [])
 .factory('hideToolTip', ['d3', function(d3){
   return function(){
     d3.selectAll('.barHover').classed('barHover', false);
-    d3.select("#tooltip").classed("hidden", true);
+    $("#tooltip").hide(1000, function(){
+      $("#tooltip")
+        .css("display", "")
+        .addClass("hidden", true);
+    });
   };
 }])
 
@@ -600,9 +604,16 @@ angular.module('myChart', [])
           var yPosition = 0 - (height + 20);
           
           //Update the tooltip position
-          d3.select("#tooltip")
-            .style("left", xPosition + "px")
-            .style("top", yPosition + "px");      
+          var toolTip = $("#tooltip");
+          if(toolTip.hasClass("hidden")){
+            toolTip
+              .removeClass("hidden")
+              .css("left", xPosition + "px")
+              .css("top", yPosition + "px");
+          }
+          else{
+            toolTip.stop().animate({left: xPosition},1000);
+          }
 
           scope.toolTipFunc(d.x, d.y);
 
@@ -624,12 +635,13 @@ angular.module('myChart', [])
           var results = myData.filter(d.d);
 
           //get svg and add pei chart
-          var psvg = d3.select("#tipsvg");
+          var psvg = d3.select("#tipsvg1");
           chartUtilities.CreatePieChart(psvg, results, myData.env === 'all', scope, d);
 
           
-          //Show the tooltip
-          d3.select("#tooltip").classed("hidden", false);
+          // //Show the tooltip
+          // d3.select("#tooltip").classed("hidden", false);
+
           d3.event.stopPropagation();
         });
       svg.on('click',function(){

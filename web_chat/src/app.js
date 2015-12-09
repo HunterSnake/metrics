@@ -80,9 +80,16 @@ angular.module('myApp', ['myChart'])
         env = myData.env;
       }
 
-      $scope.toolTipTitle = $filter('date')(date,"dd-MMM-yyyy") + ' (' + hitPoints + ')';
-      if(env != 'all'){
-        $scope.toolTipTitle =  $scope.toolTipTitle + ' in ' + env;
+      
+      $scope.toolTipNum = hitPoints
+      if(env == 'all'){
+        $('#slider').stop().animate({left: 0},1000);
+        $scope.toolTipTitle = $filter('date')(date,"dd-MMM-yyyy");
+        $scope.toolTipSubTitle = "";
+      }else{
+        $scope.toolTipTitle =  env;
+        $scope.toolTipSubTitle = $filter('date')(date,"dd-MMM-yyyy");
+        $('#slider').stop().animate({left: -415},1000);
       }
       $scope.$apply();
     }

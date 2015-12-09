@@ -195,10 +195,26 @@
                             <div class="panel panel-default">
                                 <div class="panel-body" data-ng-show="data.showChart" style="height:350px;">
                                     <my-bar-chart class="chart blue" data="data.data" cursor="display.cursor" start-date="display.date[0]" end-date="display.date[1]" td="toolTipData.d"></my-bar-chart>
-                                    <div id="tooltip" class="panel tooltip">
-                                        <h5 class="panel-header">{{toolTipTitle}}</h3>
-                                        <div style="border:1px" ng-showsss="data.env==='all'">
-                                            <svg id="tipsvg" />
+                                    <div id="tooltip" class="tooltip popout">
+                                        <div id="slider" class="slider">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">{{toolTipTitle}} <span class="badge">{{toolTipNum}}</span></div>
+                                                <div class="panel-body">
+                                                    <svg id="tipsvg1"></svg>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">{{toolTipTitle}} <small>{{toolTipSubTitle}}</small> <span class="badge">{{toolTipNum}}</span></div>
+                                                <div class="panel-body">
+                                                    <svg id="tipsvg2"></svg>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">{{toolTipTitle}} <small>{{toolTipSubTitle}}</small> <span class="badge">{{toolTipNum}}</span></div>
+                                                <div class="panel-body">
+                                                    <svg id="tipsvg3"></svg>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
