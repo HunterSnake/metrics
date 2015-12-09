@@ -102,7 +102,7 @@ angular.module('myChart', [])
   
     /* ------- PIE SLICES -------*/
     var keyFunc = function(d){ 
-      console.log(d);
+      //console.log(d);
       return d.data.y; 
     };
 

@@ -2,14 +2,18 @@
 // Application Module 
 angular.module('myApp', ['myChart'])
 .constant('config', {
-  src: 'http://localhost:8008/collections/MetricAggregatesDailyView/AggregateId',
+  src: 'http://localhost:8008/collections/MetricAggregates{1}View/AggregateId{2}?callback=JSON_CALLBACK',
   //src: 'http://metrics-datasync-service.15.126.133.55.xip.io/collections/MetricAggregatesDailyView/AggregateId',
   pathMap:[{path:'/1',name:'Total Messages Sent'},{path:'/2',name:'Requests By CompanyCode'},
           {path:'/5',name:'Onboarded People'},{path:'/6',name:'Messages By Receiver Type and Status'},
           {path:'/7',name:'Requests By External System Type'},{path:'/8',name:'Requests By External System Type and Status'},
           {path:'/10',name:'Onboarded Team'}],
+  viewMap:[{path:'/d', name:'Daily'},{path:'/w', name:'Weekly'},{path:'/m', name:'Monthly'}, {path:'/q', name:'Quarterly'}],
   pieColorSet:["#2AD2C9","#FF8D6D","#614767"],
-  MonthName:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  MonthName:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  loadDataSrc:function(viewName, aggIdpath){
+    return this.src.replace("{1}",viewName).replace("{2}",aggIdpath);
+  }
 })
 .factory('myData', ['$filter','appUtilities', function($filter,appUtilities){
   return {
@@ -122,6 +126,21 @@ angular.module('myApp', ['myChart'])
       });
     }
 
+    function getX(d){
+      if($scope.chartView == 'Daily'){
+        return new Date(d.YearName, appUtilities.monthIndex(d.MonthName), d.DayOfMonth);
+      }
+      else if($scope.chartView == 'Weekly'){
+        return new Date(d.YearName, appUtilities.monthIndex(d.MonthName), d.LastDayOfWeek);
+      }
+      else if($scope.chartView == 'Monthly'){
+        return new Date(d.YearName, appUtilities.monthIndex(d.MonthName)); 
+      }
+      else{
+        return d.DateParts;
+      }
+    }
+
     function filterData()
     {
       var sf = $filter('uppercase');
@@ -130,7 +149,7 @@ angular.module('myApp', ['myChart'])
       });
       var grouped = data.map(function(d){
         return{
-          x: new Date(d.YearName, appUtilities.monthIndex(d.MonthName), d.DayOfMonth),
+          x: getX(d),
           y: d.MetricValue - 0,
           d: d.DateParts
         }
@@ -155,22 +174,35 @@ angular.module('myApp', ['myChart'])
     }
 
     $scope.chartTitle = config.pathMap[0].name;
+    $scope.chartView = config.viewMap[0].name;
     $scope.pathMap = config.pathMap;
 
     $scope.$watch(function () {
       return $location.path();
     }, function (newPath) {
-      var found = $filter('filter')(config.pathMap, {path:newPath}, true);
+      var found = [];
+      angular.forEach(config.pathMap, function(item){
+        if(newPath.indexOf(item.path) >= 0){
+          found.push(item);
+        }
+      });
+
+      angular.forEach(config.viewMap, function(item){
+        if(newPath.indexOf(item.path) >= 0){
+          $scope.chartView = item.name;
+        }
+      });
+      
       if(found.length){
         $scope.display = {
           cursor: []
         };
         $scope.chartTitle = found[0].name;
-        loadData(config.src + newPath+'?callback=JSON_CALLBACK');
+        loadData(config.loadDataSrc($scope.chartView, found[0].path));
       }
       else{
         $scope.chartTitle = config.pathMap[0].name;
-        loadData(config.src + config.pathMap[0].path +'?callback=JSON_CALLBACK');
+        loadData(config.loadDataSrc($scope.chartView, config.pathMap[0].path));
       }
     });
    

@@ -56,9 +56,9 @@
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="/index.html#{{li.path}}" ng-click="showing()">Daily View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
+                                <li><a class="" href="/index.html#{{li.path}}/d" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="/index.html#{{li.path}}/w" ng-click="showing()">Weekly View</a></li>
+                                <li><a class="" href="/index.html#{{li.path}}/m" ng-click="showing()">Monthly View</a></li>
                                 <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>
@@ -73,7 +73,7 @@
                 <section class="wrapper" ng-hide="notReady">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - Daily View ( {{display.date[0] | date:"dd-MMM-yyyy"}} to {{display.date[1] | date:"dd-MMM-yyyy"}} )</h3>
+                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - {{chartView}} View ( {{display.date[0] | date:"dd-MMM-yyyy"}} to {{display.date[1] | date:"dd-MMM-yyyy"}} )</h3>
                                 <!-- <ol class="breadcrumb">
                                     <li><i class="fa fa-home"></i><a href="javascript:;">Home</a></li>
                                     <li><i class="fa fa-laptop"></i>Total Messages Sent</li>
