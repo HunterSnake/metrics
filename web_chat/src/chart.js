@@ -32,14 +32,9 @@ angular.module('myChart', [])
 .factory('chartUtilities', ['d3', 'config', 'myData', function(d3, config, myData){
   var insertLinebreaks = function(d) {
       var el = d3.select(this);
-      var spans = el.selectAll('tspan')[0];
-      for (var i = 0; i < spans.length; i++) {
-          var tspan = spans[i];
-          if (i > 0)
-              d3.select(tspan).attr('x', 0).attr('dy', '12');
-          else
-              d3.select(tspan).attr('x', 0).attr('dy', '-3');
-      }
+      el.selectAll('tspan').remove();
+      el.append('tspan').text(d.data.x).attr('x', 0).attr('dy', '10');
+      el.append('tspan').text(d.data.y).attr('x', 0).attr('dy', '-10');
   };
 
   var appendSlices = function(psvg, data, canClick){
@@ -141,10 +136,13 @@ angular.module('myChart', [])
 
     text.enter()
       .append("text")
-      .attr("dy", ".35em")
-      .html(function(d) {
-        return "<tspan>" + d.data.y + "</tspan><tspan>" + d.data.x + "</tspan>";
-      });
+      .attr("dy", ".35em");
+      // .html(function(d) {
+      //   return "<tspan>" + d.data.y + "</tspan><tspan>" + d.data.x + "</tspan>";
+      // });
+      // .text(function(d) {
+      //   return d.data.y + "|" + d.data.x;
+      // });
       
     function midAngle(d){
       return d.startAngle + (d.endAngle - d.startAngle)/2;
@@ -230,59 +228,6 @@ angular.module('myChart', [])
   var clickChip = null;
 
   return {
-    CreatePieChart2: function (psvg, data){
-        var w = 150;
-        var h = 150;
-
-        psvg.attr("width", w)
-          .attr("height", h);
-
-        psvg.selectAll('g.arc').data([])
-          .exit()
-          .remove();
-
-        //draw pie chart in tooltip
-        
-
-        var outerRadius = w / 2;
-        var innerRadius = 0;
-        var arc = d3.svg.arc()
-                .innerRadius(innerRadius)
-                .outerRadius(outerRadius);
-        
-        var pie = d3.layout.pie()
-            .value(function(d) { return d.x; });
-
-        var color = d3.scale.ordinal().range(config.pieColorSet);
-
-        //Set up groups
-        var arcs = psvg.selectAll("g.arc")
-                .data(pie(data))
-                .enter()
-                .append("g")
-                .attr("class", "arc")
-                .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
-        
-        //Draw arc paths
-        arcs.append("path")
-            .attr("fill", function(d, i) {
-              return color(i);
-            })
-            .attr("d", arc);
-        var sumHits = d3.sum(data,function(d){ return +d.x; });
-        
-        //Labels
-        arcs.append("text")
-            .attr("transform", function(d) {
-              return "translate(" + arc.centroid(d) + ")";
-            })
-            .attr("text-anchor", "middle")
-            .text(function(d) {
-              var percent = Number(d.data.x)/sumHits * 100;
-              return percent.toFixed(1) + "%";
-            });
-      },
-
     CreatePieChart: function(psvg, data, clickflag, scope, bar){
       myScope = scope;
       clickBar = bar;

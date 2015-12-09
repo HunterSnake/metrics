@@ -50,85 +50,13 @@
                 <div id="sidebar"  class="nav-collapse ">
                     <!-- sidebar menu start-->
                     <ul class="sidebar-menu">
-                        <li class="sub-menu">
+                        <li class="sub-menu" ng-repeat="li in pathMap">
                             <a href="javascript:;" class="">
-                                <span class="text">Total Messages Sent</span>
+                                <span class="text">{{li.name}}</span>
                                 <span class="menu-arrow arrow_carrot-right"></span>
                             </a>
                             <ul class="sub">
-                                <li><a class="" href="/index.html#1" ng-click="showing()">Daily View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <span class="text">Requests By CompanyCode</span>
-                                <span class="menu-arrow arrow_carrot-right"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="/index.html#2" ng-click="showing()">Daily View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <span class="text">Onboarded People</span>
-                                <span class="menu-arrow arrow_carrot-right"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="/index.html#5" ng-click="showing()">Daily View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <span class="text">Onboarded Team</span>
-                                <span class="menu-arrow arrow_carrot-right"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="/index.html#10" ng-click="showing()">Daily View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <span class="text">Messages By Receiver Type and Status</span>
-                                <span class="menu-arrow arrow_carrot-right"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="/index.html#6" ng-click="showing()">Daily View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <span class="text">Requests By External System Type</span>
-                                <span class="menu-arrow arrow_carrot-right"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="/index.html#7" ng-click="showing()">Daily View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
-                                <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="">
-                                <span class="text">Requests By External System Type and Status</span>
-                                <span class="menu-arrow arrow_carrot-right"></span>
-                            </a>
-                            <ul class="sub">
-                                <li><a class="" href="/index.html#8" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="/index.html#{{li.path}}" ng-click="showing()">Daily View</a></li>
                                 <li><a class="" href="javascript:;" ng-click="building()">Weekly View</a></li>
                                 <li><a class="" href="javascript:;" ng-click="building()">Monthly View</a></li>
                                 <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>

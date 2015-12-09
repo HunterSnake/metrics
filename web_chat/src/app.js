@@ -155,6 +155,7 @@ angular.module('myApp', ['myChart'])
     }
 
     $scope.chartTitle = config.pathMap[0].name;
+    $scope.pathMap = config.pathMap;
 
     $scope.$watch(function () {
       return $location.path();
