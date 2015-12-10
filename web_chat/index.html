@@ -24,7 +24,7 @@
         <!-- chart script -->
         <script src="js/d3.js" charset="UTF-8"></script>
         <script src="js/angular.js" charset="UTF-8"></script>
-        <script src="js/angular-animate.js" charset="UTF-8"></script>
+         <!-- <script src="js/angular-animate.js" charset="UTF-8"></script> -->
         <script src="js/bootstrap.js"></script>
         <script src="src/app.js"></script>
         <script src="src/chart.js"></script>
@@ -53,9 +53,9 @@
                         <li class="sub-menu" ng-repeat="li in pathMap">
                             <a href="javascript:;" class="">
                                 <span class="text">{{li.name}}</span>
-                                <span class="menu-arrow arrow_carrot-right"></span>
+                                <span class="menu-arrow" ng-class="li.name==chartTitle?'arrow_carrot-down':'arrow_carrot-right'"></span>
                             </a>
-                            <ul class="sub">
+                            <ul class="sub" ng-style="{'display':li.name==chartTitle?'block':'none'}">
                                 <li><a class="" href="/index.html#{{li.path}}/d" ng-click="showing()">Daily View</a></li>
                                 <li><a class="" href="/index.html#{{li.path}}/w" ng-click="showing()">Weekly View</a></li>
                                 <li><a class="" href="/index.html#{{li.path}}/m" ng-click="showing()">Monthly View</a></li>

@@ -22,8 +22,10 @@ angular.module('myApp', ['myChart'])
     env:'all',
     startDate:'',
     endDate:'',
+    aggreId:'',
     filter: function(dateparts, env){
       var sf = $filter('uppercase');
+      var aggId = this.aggreId;
       if(!env){
         env = this.env;
       }
@@ -31,14 +33,31 @@ angular.module('myApp', ['myChart'])
       var dataset = this.originalData.filter(function(e){
         return e.DateParts == dateparts && (env === 'all' || sf(env) === sf(e.Instance));
       }).map(function(d){
+        var groupValue = '';
+        if(env === 'all'){
+          groupValue = d.Instance;
+        }
+        else{
+          if(aggId == 6){
+            groupValue = d.SubGroupingValue;
+          }
+          else{
+            groupValue = d.GroupingValue.trim() + d.SubGroupingValue.trim();
+          }
+        }
+
         return{
           x: +d.MetricValue,
-          y: env === 'all'? d.Instance : d.GroupingValue + d.SubGroupingValue,
+          y: env === 'all' ? d.Instance : d.GroupingValue.trim() + d.SubGroupingValue.trim(),
           d: d.DateParts
         }
       });
 
-      return appUtilities.sumGroup(dataset, 'y', 'x');
+      var results = appUtilities.sumGroup(dataset, 'y', 'x');
+      if(results.length == 1 && results[0].y == ''){
+        results[0].y = env;
+      }
+      return results;
     }
   }
 }])
@@ -198,10 +217,12 @@ angular.module('myApp', ['myChart'])
           cursor: []
         };
         $scope.chartTitle = found[0].name;
+        myData.aggreId = config.pathMap[0].path.substr(1);
         loadData(config.loadDataSrc($scope.chartView, found[0].path));
       }
       else{
         $scope.chartTitle = config.pathMap[0].name;
+        myData.aggreId = config.pathMap[0].path.substr(1);
         loadData(config.loadDataSrc($scope.chartView, config.pathMap[0].path));
       }
     });

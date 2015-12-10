@@ -1,20 +1,28 @@
 function initializeJS() {
-   
+    
     //sidebar dropdown menu
     jQuery('#sidebar .sub-menu > a').click(function () {
-        var last = jQuery('.sub-menu.open', jQuery('#sidebar'));        
-        jQuery('.menu-arrow').removeClass('arrow_carrot-right');
-        jQuery('.sub', last).slideUp(200);
+        jQuery('.menu-arrow').removeClass('arrow_carrot-down');
+        jQuery('.menu-arrow').addClass('arrow_carrot-right');
+
         var sub = jQuery(this).next();
+        var last = jQuery("#sidebar .sub:visible");
+        console.log(last);
+        
         if (sub.is(":visible")) {
-            jQuery('.menu-arrow').addClass('arrow_carrot-right');            
+            jQuery(this).children(".menu-arrow").addClass('arrow_carrot-right');
             sub.slideUp(200);
         } else {
-            jQuery('.menu-arrow').addClass('arrow_carrot-down');            
+            if(last && last !== sub){
+                last.slideUp(200);
+            }
+            last = sub;
+            jQuery(this).children(".menu-arrow").removeClass('arrow_carrot-right');
+            jQuery(this).children(".menu-arrow").addClass('arrow_carrot-down');
             sub.slideDown(200);
         }
         var o = (jQuery(this).offset());
-        diff = 200 - o.top;
+        //diff = 200 - o.top;
         // if(diff>0)
         //     jQuery("#sidebar").scrollTo("-="+Math.abs(diff),500);
         // else
@@ -61,16 +69,16 @@ function initializeJS() {
         }
     });
 
-    //bar chart
-    if (jQuery(".custom-custom-bar-chart")) {
-        jQuery(".bar").each(function () {
-            var i = jQuery(this).find(".value").html();
-            jQuery(this).find(".value").html("");
-            jQuery(this).find(".value").animate({
-                height: i
-            }, 2000)
-        })
-    }
+    // //bar chart
+    // if (jQuery(".custom-custom-bar-chart")) {
+    //     jQuery(".bar").each(function () {
+    //         var i = jQuery(this).find(".value").html();
+    //         jQuery(this).find(".value").html("");
+    //         jQuery(this).find(".value").animate({
+    //             height: i
+    //         }, 2000)
+    //     })
+    // }
 
 }
 
