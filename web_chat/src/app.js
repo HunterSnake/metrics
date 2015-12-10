@@ -48,7 +48,7 @@ angular.module('myApp', ['myChart'])
 
         return{
           x: +d.MetricValue,
-          y: env === 'all' ? d.Instance : d.GroupingValue.trim() + d.SubGroupingValue.trim(),
+          y: groupValue,
           d: d.DateParts
         }
       });
