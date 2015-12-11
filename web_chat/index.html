@@ -55,9 +55,9 @@
                                 <span class="menu-arrow" ng-class="li.name==chartTitle?'arrow_carrot-down':'arrow_carrot-right'"></span>
                             </a>
                             <ul class="sub" ng-style="{'display':li.name==chartTitle?'block':'none'}">
-                                <li><a class="" href="/index.html#{{li.path}}/d" ng-click="showing()">Daily View</a></li>
-                                <li><a class="" href="/index.html#{{li.path}}/w" ng-click="showing()">Weekly View</a></li>
-                                <li><a class="" href="/index.html#{{li.path}}/m" ng-click="showing()">Monthly View</a></li>
+                                <li><a class="" href="/index.html#{{li.path}}{{viewMap[0].path}}" ng-click="showing()">Daily View</a></li>
+                                <li><a class="" href="/index.html#{{li.path}}{{viewMap[1].path}}" ng-click="showing()">Weekly View</a></li>
+                                <li><a class="" href="/index.html#{{li.path}}{{viewMap[2].path}}" ng-click="showing()">Monthly View</a></li>
                                 <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>

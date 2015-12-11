@@ -148,15 +148,27 @@ angular.module('myChart', [])
       return d.startAngle + (d.endAngle - d.startAngle)/2;
     }
 
+    var lastTextpos = [-1000,-1000];
+
+    var reversiond2 = null;
+
     text.transition().duration(1000)
       .attrTween("transform", function(d) {
         this._current = this._current || d;
         var interpolate = d3.interpolate(this._current, d);
         this._current = interpolate(0);
+
         return function(t) {
           var d2 = interpolate(t);
           var pos = outerArc.centroid(d2);
           pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+          if(data.length > 2 && Math.abs(pos[0] - lastTextpos[0]) < 5 && Math.abs(pos[1] - lastTextpos[1]) < 15)
+          {
+            pos[0] = 0 - pos[0];
+            reversiond2 = d2;
+          }
+
+          lastTextpos = pos;
           return "translate("+ pos +")";
         };
       })
@@ -166,7 +178,7 @@ angular.module('myChart', [])
         this._current = interpolate(0);
         return function(t) {
           var d2 = interpolate(t);
-          return midAngle(d2) < Math.PI ? "start":"end";
+          return midAngle(d2) < Math.PI || (reversiond2 != null && reversiond2.data.y == d2.data.y) ? "start":"end";
         };
       });
 
@@ -193,6 +205,11 @@ angular.module('myChart', [])
           var d2 = interpolate(t);
           var pos = outerArc.centroid(d2);
           pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+          if(reversiond2 != null && reversiond2.data.y == d2.data.y)
+          {
+            pos[0] = 0 - pos[0];
+          }
+
           return [arc.centroid(d2), outerArc.centroid(d2), pos];
         };      
       });

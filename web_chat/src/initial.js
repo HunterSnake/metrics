@@ -7,7 +7,6 @@ function initializeJS() {
 
         var sub = jQuery(this).next();
         var last = jQuery("#sidebar .sub:visible");
-        console.log(last);
         
         if (sub.is(":visible")) {
             jQuery(this).children(".menu-arrow").addClass('arrow_carrot-right');
