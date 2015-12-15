@@ -95,7 +95,7 @@ rect.data-bar:hover, .barHover{
   overflow: hidden;
   z-index: 999;
   opacity: 1;
-  width: 420px;
+  width: 430px;
   height: auto;
   padding: 10px;
   background-color: white;
@@ -126,7 +126,11 @@ rect.data-bar:hover, .barHover{
 .tooltip .panel{
   width: 400px;
   float: left;
-  margin: 0px 5px;
+  margin: 0px 8px;
+}
+
+.tooltip .panel-body{
+  padding: 0px;
 }
 
 path.slice{

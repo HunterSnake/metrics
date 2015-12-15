@@ -18,17 +18,6 @@ angular.module('myChart', [])
   };
 })
 
-.factory('hideToolTip', ['d3', function(d3){
-  return function(){
-    d3.selectAll('.barHover').classed('barHover', false);
-    $("#tooltip").hide(1000, function(){
-      $("#tooltip")
-        .css("display", "")
-        .addClass("hidden", true);
-    });
-  };
-}])
-
 .factory('chartUtilities', ['d3', 'config', 'myData', function(d3, config, myData){
   var insertLinebreaks = function(d) {
       var el = d3.select(this);
@@ -64,6 +53,8 @@ angular.module('myChart', [])
       for(i = 1; i < data.length; i++){
         var percent = Math.floor(Number(data[i].x)/sumHits * 100);
         if(percent < 5 && i < data.length - 1){
+          myData.others = angular.copy(data.slice(i));
+          
           data[i].y = "others";
           data[i].x = d3.sum(data.slice(i),function(d){ return +d.x; });
           data = data.slice(0, i + 1);
@@ -88,7 +79,7 @@ angular.module('myChart', [])
 
     var pie = d3.layout.pie()
             .value(function(d) { return d.x; });
-    var w = 220, h = 180,
+    var w = 200, h = 180,
       radius = Math.min(w, h) / 2;
     var arc = d3.svg.arc()
       .outerRadius(radius * 0.8)
@@ -114,7 +105,9 @@ angular.module('myChart', [])
       .style("fill", function(d, i) {
             return color(i);
           })
-      .attr("class", "slice");
+      .attr("class", "slice")
+      .append("title")
+      .text(function(d){ return d.data.t; });
 
     slice   
       .transition().duration(1000)
@@ -136,7 +129,9 @@ angular.module('myChart', [])
 
     text.enter()
       .append("text")
-      .attr("dy", ".35em");
+      .attr("dy", ".35em")
+      .append("title")
+      .text(function(d){ return d.data.t; });
       // .html(function(d) {
       //   return "<tspan>" + d.data.y + "</tspan><tspan>" + d.data.x + "</tspan>";
       // });
@@ -193,7 +188,9 @@ angular.module('myChart', [])
       .data(pie(data), keyFunc);
     
     polyline.enter()
-      .append("polyline");
+      .append("polyline")
+      .append("title")
+      .text(function(d){ return d.data.t; });
 
 
     polyline.transition().duration(1000)
@@ -219,24 +216,63 @@ angular.module('myChart', [])
 
     if(canClick){
       var clickFunc = function(d){
-        clickChip = d;
-        myScope.toolTipFunc(clickBar.x, d.data.x, d.data.y);
-        var results = myData.filter(clickBar.d, clickChip.data.y);
-        var psvg2 = d3.select("#tipsvg2");
-        psvg2.selectAll('g').data([])
-          .exit()
-          .remove();
+        if(d.data.x > 0){
+          clickChip = d;
+          var results = myData.filter(clickBar.d, clickChip.data.y);
+          if(results.length > 0 && results[0].y !== ''){
+            myScope.toolTipFunc(clickBar.x, d.data.x, d.data.y);
+            var psvg2 = d3.select("#tipsvg2");
+            psvg2.selectAll('g').data([])
+              .exit()
+              .remove();
 
-        appendSlices(psvg2, results, false);
+            appendSlices(psvg2, results, false);
+          }
+        }
       };
 
-      slice.attr("cursor", "pointer")
+      var cursorFunc = function(d){
+        if(d.data.x > 0){
+          var results = myData.filter(clickBar.d, d.data.y);
+          if(results.length > 0 && results[0].y !== '')
+              return "pointer";
+          else
+            return "";
+        }
+        else{
+          return "";
+        }
+      }
+
+
+      slice.attr("cursor", cursorFunc)
         .on("click", clickFunc);
-      text.attr("cursor", "pointer")
+      text.attr("cursor", cursorFunc)
         .on("click", clickFunc);
-      polyline.attr("cursor", "pointer")
+      polyline.attr("cursor", cursorFunc)
         .on("click", clickFunc);
-      //canClick = false;
+    }
+    else
+    {
+      var othersClickFunc = function(d){
+        if(d.data.y == 'others'){
+          myScope.toolTipFunc(clickBar.x, d.data.x, d.data.y);
+          var psvg3 = d3.select("#tipsvg3");
+          psvg3.selectAll('g').data([])
+            .exit()
+            .remove();
+
+          appendSlices(psvg3, myData.others, false);
+        }
+      };
+
+      var othersCursorFunc = function(d){
+        return d.data.y == 'others'?'pointer':'';
+      };
+
+      slice.attr("cursor", othersCursorFunc).on("click", othersClickFunc);
+      text.attr("cursor", othersCursorFunc).on("click", othersClickFunc);
+      polyline.attr("cursor", othersCursorFunc).on("click", othersClickFunc);
     }
   };
 
@@ -251,6 +287,14 @@ angular.module('myChart', [])
       
       //canClick = clickflag;
       appendSlices(psvg, data, clickflag);
+    },
+    hideToolTip: function(){
+      d3.selectAll('.barHover').classed('barHover', false);
+      $("#tooltip").hide(1000, function(){
+        $("#tooltip")
+          .css("display", "")
+          .addClass("hidden", true);
+      });
     }
   };
 }])
@@ -419,8 +463,8 @@ angular.module('myChart', [])
 
 
 // Bar Chart directive
-.directive('myBarChart', ["d3", "$filter", "MaxYAxis", "config", "hideToolTip", "appUtilities", "myData", "chartUtilities", 
-  function(d3, $filter, MaxYAxis, config, hideToolTip, appUtilities, myData, chartUtilities){
+.directive('myBarChart', ["d3", "$filter", "MaxYAxis", "config", "appUtilities", "myData", "chartUtilities", 
+  function(d3, $filter, MaxYAxis, config, appUtilities, myData, chartUtilities){
 
     function draw(svg, width, height, data, scope) {
 
@@ -506,7 +550,7 @@ angular.module('myChart', [])
         .call(yGrid);
 
       /* ---- Draw bars ---- */
-      hideToolTip();
+      chartUtilities.hideToolTip();
 
       svg.select('.data')
         .selectAll('rect').data(data)
@@ -517,7 +561,7 @@ angular.module('myChart', [])
           //Get this bar's x/y values, then augment for the tooltip
           var clickBar = d3.select(this);
           var xPosition = parseFloat(clickBar.attr("x")) + parseFloat(clickBar.attr("width"));
-          var tooltipWidth = 420; //parseFloat($("#tooltip").width());
+          var tooltipWidth = 430; //parseFloat($("#tooltip").width());
         
           if(xPosition > width - tooltipWidth){
             xPosition = xPosition - tooltipWidth - parseFloat(clickBar.attr("width")) - 3.0;
@@ -559,7 +603,7 @@ angular.module('myChart', [])
           d3.event.stopPropagation();
         });
       svg.on('click',function(){
-        hideToolTip();
+        chartUtilities.hideToolTip();
       });
 
       var easing = d3.ease('cubic');

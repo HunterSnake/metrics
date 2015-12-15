@@ -34,12 +34,50 @@ angular.module('myApp', ['myChart'])
         return e.DateParts == dateparts && (env === 'all' || sf(env) === sf(e.Instance));
       }).map(function(d){
         var groupValue = '';
+
         if(env === 'all'){
           groupValue = d.Instance;
         }
         else{
-          if(aggId == 6){
-            groupValue = d.SubGroupingValue;
+          if (aggId == 6) {
+            if (d.SubGroupingValue.indexOf("ME_I_") != -1)
+                groupValue = d.GroupingValue.trim() + " Success_" + d.SubGroupingValue.substring(5, 9);
+            else if (d.SubGroupingValue.indexOf("ME_E_") != -1)
+                groupValue = d.GroupingValue.trim() + " Failure_" + d.SubGroupingValue.substring(5, 9);
+          }
+          else if (aggId == 8) {
+            if (d.SubGroupingValue == "Individual=No; Distribution=No; Escalation=No; KeywordMatch=No;")
+                groupValue = d.GroupingValue.trim() + " No Match";
+            else if (d.SubGroupingValue == "Individual=No; Distribution=No; Escalation=No; KeywordMatch=Yes;")
+                groupValue = d.GroupingValue.trim() + " No Action";
+            else if (d.SubGroupingValue == "Individual=No; Distribution=No; Escalation=Yes; KeywordMatch=No;")
+                groupValue = d.GroupingValue.trim() + " Direct Esc";
+            else if (d.SubGroupingValue == "Individual=No; Distribution=Yes; Escalation=No; KeywordMatch=No;")
+                groupValue = d.GroupingValue.trim() + " Direct Dist";
+            else if (d.SubGroupingValue == "Individual=Yes; Distribution=No; Escalation=No; KeywordMatch=No;")
+                groupValue = d.GroupingValue.trim() + " Direct Indiv";
+            else if (d.SubGroupingValue == "Individual=No; Distribution=Yes; Escalation=Yes; KeywordMatch=No;")
+                groupValue = d.GroupingValue.trim() + " Esc & Dist";
+            else if (d.SubGroupingValue == "Individual=Yes; Distribution=No; Escalation=Yes; KeywordMatch=No;")
+                groupValue = d.GroupingValue.trim() + " Esc & Indiv";
+            else if (d.SubGroupingValue == "Individual=Yes; Distribution=Yes; Escalation=No; KeywordMatch=No;")
+                groupValue = d.GroupingValue.trim() + " Dist & Indiv";
+            else if (d.SubGroupingValue == "Individual=Yes; Distribution=Yes; Escalation=Yes; KeywordMatch=No;")
+                groupValue = d.GroupingValue.trim() + " Esc, Dist & Indiv";
+            else if (d.SubGroupingValue == "Individual=No; Distribution=No; Escalation=Yes; KeywordMatch=Yes;")
+                groupValue = d.GroupingValue.trim() + " Match Esc";
+            else if (d.SubGroupingValue == "Individual=No; Distribution=Yes; Escalation=No; KeywordMatch=Yes;")
+                groupValue = d.GroupingValue.trim() + " Match Dist";
+            else if (d.SubGroupingValue == "Individual=No; Distribution=Yes; Escalation=Yes; KeywordMatch=Yes;")
+                groupValue = d.GroupingValue.trim() + " Match Esc & Dist";
+            else if (d.SubGroupingValue == "Individual=Yes; Distribution=No; Escalation=Yes; KeywordMatch=Yes;")
+                groupValue = d.GroupingValue.trim() + " Match Esc & Indiv";
+            else if (d.SubGroupingValue == "Individual=Yes; Distribution=Yes; Escalation=No; KeywordMatch=Yes;")
+                groupValue = d.GroupingValue.trim() + " Match Dist & Indiv";
+            else if (d.SubGroupingValue == "Individual=Yes; Distribution=Yes; Escalation=Yes; KeywordMatch=Yes;")
+                groupValue = d.GroupingValue.trim() + " Match Esc, Dist & Indiv";
+            else if (d.SubGroupingValue == "Individual=Yes; Distribution=No; Escalation=No; KeywordMatch=Yes;")
+                groupValue = d.GroupingValue.trim() + " Match Indiv";
           }
           else{
             groupValue = d.GroupingValue.trim() + d.SubGroupingValue.trim();
@@ -49,14 +87,12 @@ angular.module('myApp', ['myChart'])
         return{
           x: +d.MetricValue,
           y: groupValue,
-          d: d.DateParts
+          d: d.DateParts,
+          t: aggId == 6 && env !== 'all' ? d.GroupingValue.trim() + d.SubGroupingValue.trim() : ''
         }
       });
 
       var results = appUtilities.sumGroup(dataset, 'y', 'x');
-      if(results.length == 1 && results[0].y == ''){
-        results[0].y = env;
-      }
       return results;
     }
   }
@@ -105,19 +141,22 @@ angular.module('myApp', ['myChart'])
 
       
       $scope.toolTipNum = hitPoints
+      $scope.toolTipTitle = $filter('date')(date,"dd-MMM-yyyy");
+      $scope.toolTipSubTitle = env;
       if(env == 'all'){
         $('#slider').stop().animate({left: 0},1000);
-        $scope.toolTipTitle = $filter('date')(date,"dd-MMM-yyyy");
-        $scope.toolTipSubTitle = "";
-      }else{
-        $scope.toolTipTitle =  env;
-        $scope.toolTipSubTitle = $filter('date')(date,"dd-MMM-yyyy");
-        $('#slider').stop().animate({left: -415},1000);
+      }else if(env == 'others'){
+        $('#slider').stop().animate({left: -840},1000);
+      }
+      else{
+        $('#slider').stop().animate({left: -420},1000);
       }
       $scope.$apply();
     }
 
-
+    $scope.toolTipBack = function(step){
+      $('#slider').stop().animate({left: (step-1)*-420},1000);
+    }
 
     $scope.pieColorSet = config.pieColorSet;
 
@@ -128,6 +167,10 @@ angular.module('myApp', ['myChart'])
 
     $scope.showing = function(){
       $scope.notReady = false;
+    }
+
+    $scope.hideToolTip = function(){
+      chartUtilities.hideToolTip();
     }
 
 
@@ -218,7 +261,7 @@ angular.module('myApp', ['myChart'])
           cursor: []
         };
         $scope.chartTitle = found[0].name;
-        myData.aggreId = config.pathMap[0].path.substr(1);
+        myData.aggreId = found[0].path.substr(1);
         loadData(config.loadDataSrc($scope.chartView, found[0].path));
       }
       else{

@@ -7,3 +7,7 @@ html, body {
 .btn-default.active{
     background-color:rgba(66, 85, 99, 0.6)
 }
+
+.panel-heading .btn{
+  margin-top: 1px;
+}

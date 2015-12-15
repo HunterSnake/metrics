@@ -125,19 +125,33 @@
                                     <div id="tooltip" class="tooltip popout">
                                         <div id="slider" class="slider">
                                             <div class="panel panel-default">
-                                                <div class="panel-heading">{{toolTipTitle}} <span class="badge">{{toolTipNum}}</span></div>
+                                                <div class="panel-heading">
+                                                    {{toolTipSubTitle | uppercase}} ({{toolTipTitle}}) <span class="badge">Total: {{toolTipNum}}</span>
+                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
+                                                    <div class="clearfix"></div>
+                                                </div>
                                                 <div class="panel-body">
                                                     <svg id="tipsvg1"></svg>
                                                 </div>
                                             </div>
                                             <div class="panel panel-default">
-                                                <div class="panel-heading">{{toolTipTitle}} <small>{{toolTipSubTitle}}</small> <span class="badge">{{toolTipNum}}</span></div>
+                                                <div class="panel-heading">
+                                                    {{toolTipSubTitle | uppercase }} ({{toolTipTitle}}) <!-- <span class="label label-success">{{toolTipSubTitle}}</span> --> <span class="badge">Total: {{toolTipNum}}</span>
+
+                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()" title="Close"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" title="Back" data-ng-click="toolTipBack(1)"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></button>
+                                                </div>
                                                 <div class="panel-body">
                                                     <svg id="tipsvg2"></svg>
                                                 </div>
                                             </div>
                                             <div class="panel panel-default">
-                                                <div class="panel-heading">{{toolTipTitle}} <small>{{toolTipSubTitle}}</small> <span class="badge">{{toolTipNum}}</span></div>
+                                                <div class="panel-heading">
+                                                    {{toolTipSubTitle | uppercase }} ({{toolTipTitle}}) <!-- <span class="label label-success">{{toolTipSubTitle}}</span> --> <span class="badge">Total: {{toolTipNum}}</span>
+
+                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()" title="Close"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" title="Back" data-ng-click="toolTipBack(2)"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></button>
+                                                </div>
                                                 <div class="panel-body">
                                                     <svg id="tipsvg3"></svg>
                                                 </div>
