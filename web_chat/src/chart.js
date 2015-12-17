@@ -488,18 +488,27 @@ angular.module('myChart', [])
       if(dayNumber > 0){
         barWidth = Math.floor((width-2*margin-labelPadding)/(1.4*dayNumber));
       }
-      //console.log("width="+width+", dayNumber=" +dayNumber+", barWidth=" + barWidth );
-
-      // Define x scale
+      
       var xScale = d3.time.scale()
         .domain(dataExtent)
         .range([margin + labelPadding + barWidth/2 + 2, width-margin]);
 
+      
+
       // Define x-axis
-      var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient('bottom')
-        .tickFormat(d3.time.format('%b %d'));
+      if(scope.chartView == 'Monthly'){
+        var xAxis = d3.svg.axis()
+          .scale(xScale)
+          .orient('bottom')
+          .tickFormat(d3.time.format('%b'))
+          .ticks(data.length);
+      }
+      else{
+        var xAxis = d3.svg.axis()
+          .scale(xScale)
+          .orient('bottom')
+          .tickFormat(d3.time.format('%b %d'));
+      }
 
       // Define x-grid
       var xGrid = d3.svg.axis()

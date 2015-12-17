@@ -3,7 +3,7 @@
 angular.module('myApp', ['myChart'])
 .constant('config', {
   src: 'http://localhost:8008/collections/MetricAggregates{1}View/AggregateId{2}?callback=JSON_CALLBACK',
-  //src: 'http://metrics-datasync-service.15.126.133.55.xip.io/collections/MetricAggregatesDailyView/AggregateId',
+  //src: 'http://metrics-datasync-service.15.126.133.55.xip.io/collections/MetricAggregates{1}View/AggregateId{2}?callback=JSON_CALLBACK',
   pathMap:[{path:'/1',name:'Total Messages Sent'},{path:'/2',name:'Requests By CompanyCode'},
           {path:'/5',name:'Onboarded People'},{path:'/6',name:'Messages By Receiver Type and Status'},
           {path:'/7',name:'Requests By External System Type'},{path:'/8',name:'Requests By External System Type and Status'},
@@ -140,19 +140,34 @@ angular.module('myApp', ['myChart'])
       }
 
       
-      $scope.toolTipNum = hitPoints
+      
       $scope.toolTipTitle = $filter('date')(date,"dd-MMM-yyyy");
-      $scope.toolTipSubTitle = env;
+      
       if(env == 'all'){
         $('#slider').stop().animate({left: 0},1000);
+        $scope.toolTipSubTitle = env;
+        $scope.toolTipNum = hitPoints;
+        $scope.forward1 = false;
+        $scope.forward2 = false;
+
       }else if(env == 'others'){
         $('#slider').stop().animate({left: -840},1000);
+        $scope.toolTipSubTitle3 = env;
+        $scope.toolTipNum3 = hitPoints;
+        $scope.forward2 = true;
       }
       else{
         $('#slider').stop().animate({left: -420},1000);
+        $scope.toolTipSubTitle2 = env;
+        $scope.toolTipNum2 = hitPoints;
+        $scope.forward1 = true;
+        $scope.forward2 = false;
       }
       $scope.$apply();
     }
+
+    $scope.forward1 = false;
+    $scope.forward2 = false;
 
     $scope.toolTipBack = function(step){
       $('#slider').stop().animate({left: (step-1)*-420},1000);

@@ -9,5 +9,11 @@ html, body {
 }
 
 .panel-heading .btn{
-  margin-top: 1px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  color: #5F7A76;
+}
+
+.panel .panel-heading{
+    padding-right:10px;
 }

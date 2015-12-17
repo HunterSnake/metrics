@@ -83,7 +83,7 @@
                     <div class="row">
                         <div class="col-md-4" style="height:118px">
                             <div class="btn-group" data-toggle="buttons" style="width:100%">
-                                <label class="btn btn-default active" style="width:50%;min-width:110px;" ng-click="changeEnvFunc('all')">
+                                <label class="btn btn-default active" style="width:98.6%;min-width:110px;border-radius:0px;" ng-click="changeEnvFunc('all')">
                                     <input name="optionEvn" id="optionEvn" type="radio" value="all"/>
                                     ALL DATA
                                 </label><br/><br/>
@@ -95,7 +95,7 @@
                                     <input name="optionEvn" id="optionEvn" type="radio" value="eit200"/>
                                     EIT 200
                                 </label>
-                                <label class="btn btn-default" style="width:33%;min-width:90px;" ng-click="changeEnvFunc('eit300')">
+                                <label class="btn btn-default" style="width:33%;min-width:90px;border-radius:0px;" ng-click="changeEnvFunc('eit300')">
                                     <input name="optionEvn" id="optionEvn" type="radio" value="eit300"/>
                                     EIT 300
                                 </label>
@@ -127,7 +127,8 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     {{toolTipSubTitle | uppercase}} ({{toolTipTitle}}) <span class="badge">Total: {{toolTipNum}}</span>
-                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()" style="margin-left:7px;"><span class="glyphicon glyphicon-remove" title="Close" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" title="Forward" data-ng-click="toolTipBack(2)" ng-disabled="!forward1"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <div class="panel-body">
@@ -136,10 +137,11 @@
                                             </div>
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
-                                                    {{toolTipSubTitle | uppercase }} ({{toolTipTitle}}) <!-- <span class="label label-success">{{toolTipSubTitle}}</span> --> <span class="badge">Total: {{toolTipNum}}</span>
+                                                    {{toolTipSubTitle2 | uppercase }} ({{toolTipTitle}}) <!-- <span class="label label-success">{{toolTipSubTitle}}</span> --> <span class="badge">Total: {{toolTipNum2}}</span>
 
-                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()" title="Close"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
-                                                    <button class="btn btn-default btn-sm pull-right" title="Back" data-ng-click="toolTipBack(1)"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()" title="Close" style="margin-left:7px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" title="Forward" data-ng-click="toolTipBack(3)" ng-disabled="!forward2"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" title="Back" data-ng-click="toolTipBack(1)"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
                                                 </div>
                                                 <div class="panel-body">
                                                     <svg id="tipsvg2"></svg>
@@ -147,10 +149,10 @@
                                             </div>
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
-                                                    {{toolTipSubTitle | uppercase }} ({{toolTipTitle}}) <!-- <span class="label label-success">{{toolTipSubTitle}}</span> --> <span class="badge">Total: {{toolTipNum}}</span>
+                                                    {{toolTipSubTitle3 | uppercase }} ({{toolTipTitle}}) <!-- <span class="label label-success">{{toolTipSubTitle}}</span> --> <span class="badge">Total: {{toolTipNum3}}</span>
 
-                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()" title="Close"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
-                                                    <button class="btn btn-default btn-sm pull-right" title="Back" data-ng-click="toolTipBack(2)"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" data-ng-click="hideToolTip()" title="Close" style="margin-left:7px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                                    <button class="btn btn-default btn-sm pull-right" title="Back" data-ng-click="toolTipBack(2)"><span class="glyphicon glyphicon-chevron-left " aria-hidden="true"></span></button>
                                                 </div>
                                                 <div class="panel-body">
                                                     <svg id="tipsvg3"></svg>
