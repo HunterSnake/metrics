@@ -22,8 +22,8 @@ angular.module('myChart', [])
   var insertLinebreaks = function(d) {
       var el = d3.select(this);
       el.selectAll('tspan').remove();
-      el.append('tspan').text(d.data.x).attr('x', 0).attr('dy', '10');
-      el.append('tspan').text(d.data.y).attr('x', 0).attr('dy', '-10');
+      el.append('tspan').text(d.data.x).attr('x', 0).attr('dy', '11');
+      el.append('tspan').text(d.data.y).attr('x', 0).attr('dy', '-11');
   };
 
   var appendSlices = function(psvg, data, canClick){
