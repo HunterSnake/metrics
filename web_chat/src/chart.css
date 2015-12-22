@@ -59,8 +59,8 @@
 }
 
 .data-line, .data-bar, .data-area{
-  fill:#00B388;
-  stroke:#00B388;
+  fill: rgb(128,130,133 );
+	stroke: rgb(128,130,133 );
 }
 
 .blue .data-area {
@@ -119,7 +119,7 @@ rect.data-bar:hover, .barHover{
 .tooltip .slider{
   position: relative;
   left:0;
-  width: 1300px;
+  width: 2600px;
   padding: 0px;
 }
 

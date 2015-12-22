@@ -251,7 +251,9 @@ angular.module('myApp', ['myChart'])
     }
 
     $scope.chartTitle = config.pathMap[0].name;
+		$scope.chartPath = config.pathMap[0].path;
     $scope.chartView = config.viewMap[0].name;
+		$scope.viewPath = config.viewMap[0].path;
     $scope.pathMap = config.pathMap;
     $scope.viewMap = config.viewMap;
 
@@ -260,14 +262,17 @@ angular.module('myApp', ['myChart'])
     }, function (newPath) {
       var found = [];
       angular.forEach(config.pathMap, function(item){
-        if(newPath.indexOf(item.path) >= 0){
+        var regexPath = new RegExp('(' + item.path + '[/])|(' + item.path + '$)');
+        if(regexPath.test(newPath)){
           found.push(item);
         }
       });
 
       angular.forEach(config.viewMap, function(item){
-        if(newPath.indexOf(item.path) >= 0){
+        var regexPath = new RegExp('(' + item.path + '[/])|(' + item.path + '$)');
+        if(regexPath.test(newPath)){
           $scope.chartView = item.name;
+					$scope.viewPath = item.path;
         }
       });
       
@@ -276,6 +281,7 @@ angular.module('myApp', ['myChart'])
           cursor: []
         };
         $scope.chartTitle = found[0].name;
+				$scope.chartPath = found[0].path;
         myData.aggreId = found[0].path.substr(1);
         loadData(config.loadDataSrc($scope.chartView, found[0].path));
       }
@@ -286,8 +292,11 @@ angular.module('myApp', ['myChart'])
       }
     });
    
+    $scope.env = "All Data";
+
     $scope.changeEnvFunc = function(newEnv){
       myData.env = newEnv;
+      $scope.env = newEnv == "all" ? "All Data" : newEnv;
       filterData();
     };
   }

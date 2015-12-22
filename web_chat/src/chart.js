@@ -53,14 +53,19 @@ angular.module('myChart', [])
       for(i = 1; i < data.length; i++){
         var percent = Math.floor(Number(data[i].x)/sumHits * 100);
         if(percent < 5 && i < data.length - 1){
-          myData.others = angular.copy(data.slice(i));
-          
-          data[i].y = "others";
-          data[i].x = d3.sum(data.slice(i),function(d){ return +d.x; });
-          data = data.slice(0, i + 1);
+          myData.others.push(angular.copy(data.slice(i)));
+          var otherdata = angular.copy(data.slice(0, i + 1))
+          otherdata[i].y = "others";  
+          otherdata[i].x = d3.sum(data.slice(i),function(d){ return +d.x; });
+          data = otherdata;
+          //data = data.slice(0, i + 1);
           break;
         }
       }
+
+      data.sort(function(a, b){
+        return b.x - a.x;
+      });
     }
 
     
@@ -217,6 +222,7 @@ angular.module('myChart', [])
     if(canClick){
       var clickFunc = function(d){
         if(d.data.x > 0){
+          myData.others = [];
           clickChip = d;
           var results = myData.filter(clickBar.d, clickChip.data.y);
           if(results.length > 0 && results[0].y !== ''){
@@ -262,7 +268,14 @@ angular.module('myChart', [])
             .exit()
             .remove();
 
-          appendSlices(psvg3, myData.others, false);
+          if(psvg.attr("id") == "tipsvg2"){
+            var otherdata =  myData.others[0]
+            myData.others = [];
+            myData.others.push(otherdata);
+          }else{
+            var otherdata =  myData.others.slice(-1)[0];
+          }
+          appendSlices(psvg3, otherdata, false);
         }
       };
 
@@ -448,6 +461,10 @@ angular.module('myChart', [])
             });
           });
 
+          dispatch.on('brushend', function(brush){ 
+            console.log(brush.extent());
+          });
+
           // Watch the data attribute of the scope
           scope.$watch('data', function(newVal, oldVal, scope) {
             
@@ -481,12 +498,23 @@ angular.module('myChart', [])
       var labelPadding = 50;
 
       var dataExtent = d3.extent(data, function(d) { return d.x; });
-      var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-      dayNumber = Math.round(Math.abs((dataExtent[1].getTime() - dataExtent[0].getTime())/(oneDay)));
+      var barNumber = data.length;
+      // if(scope.chartView == 'Daily'){
+      //   var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+      //   barNumber = Math.round(Math.abs((dataExtent[1].getTime() - dataExtent[0].getTime())/(oneDay)));
+      // }
+      // else if(scope.chartView == 'Weekly'){}
+      // else if(scope.chartView == 'Monthly'){}
+      // else{
+
+      // }
 
       var barWidth = 1;
-      if(dayNumber > 0){
-        barWidth = Math.floor((width-2*margin-labelPadding)/(1.4*dayNumber));
+      if(barNumber > 0){
+        barWidth = Math.floor((width-2*margin-labelPadding)/(1.4*barNumber));
+      }
+      if(barWidth > 40){
+        barWidth = 40;
       }
       
       var xScale = d3.time.scale()

@@ -1,7 +1,12 @@
 html, body {
 	position: relative;
-	font-family: 'Helvetica', sans-serif;
+	font-family: Metric,Arial,sans-serif !important;
 	font-size: 12px;
+    background-color:#f1f1f1;
+}
+
+.wrapper{
+    margin-top:120px;
 }
 
 .btn-default.active{
@@ -16,4 +21,90 @@ html, body {
 
 .panel .panel-heading{
     padding-right:10px;
+}
+.page-header{
+    text-transform:none;
+}
+
+h3{
+	font-family: Metric,Arial,sans-serif !important;
+}
+
+.header{
+    padding:0px;
+    background-color:#f1f1f1;
+}
+.viewbar{
+    background-color:#614767;
+    width:100%;
+    height:40px;
+    margin-top:90px;
+    padding-top:7px;
+}
+
+.viewtable{
+    color: #ffffff !important;
+    min-width:700px;
+    margin-left:320px;
+    font-size:17px;
+    font-family:Metric,Arial,sans-serif;
+    vertical-align:middle;
+    text-align:center;
+    font-weight: normal;    
+}
+.viewtable a{
+    color: #ffffff !important;
+}
+.viewselected{
+    text-decoration:underline;
+}
+
+#sidebar {
+    background-color:white;
+    min-width:295px;
+}
+
+#main-content{
+    margin-left:300px;
+}
+
+.header-text{
+    font-size: 17px;
+    font-weight: 500;
+    font-family:Metric,Arial,sans-serif;
+    color:#333333 !important;
+}
+
+.ulsidebar{
+    margin-top:160px;
+    padding-left:20px;
+    font-size: 19px;
+    font-weight:100;
+    line-height: 24px;
+    color: #222;
+    font-family:Metric,Arial,sans-serif;
+}
+
+.lisidebar{
+    padding-top:5px;
+    padding-bottom:5px;
+}
+.lisidebar a{
+    color: #222;
+}
+.lisidebar:hover{
+    background-color: rgb(43, 210, 202);
+}
+
+.lisidebarselected{
+    border-right-color: rgb(0, 168, 130);
+    border-right-style: solid;
+    border-right-width: 5px;
+}
+.charttitle{
+    font-size: 40px;
+    font-weight: 600;
+    font-family:Metric,Arial,sans-serif !important;    
+    color:#000000 !important;
+    margin-right:10px;
 }

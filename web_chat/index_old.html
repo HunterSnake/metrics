@@ -32,28 +32,15 @@
         <!-- container section start -->
         <section id="container" class="">
             <header class="header green-bg">
-                <!--<div class="toggle-nav">
-        <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
-    </div>-->
+                <div class="toggle-nav">
+                    <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+                </div>
                 <!--logo start-->
-                <!--<a href="javascript:;" class="logo">Enote <span class="lite">Metrics</span></a>-->
-                <div class="navbar-right" style="position:absolute;left:25px;top:15px;">
-                    <img src="pic/hpe.png" style="height:62px;padding-left:3px;padding-right:5px;" />
+                <a href="javascript:;" class="logo">Enote <span class="lite">Metrics</span></a>
+                <div class="navbar-right" style="position:absolute;right:7px;top:8px;background-color:white;">
+                    <img src="pic/hpe.png" style="height:43px;padding-left:3px;padding-right:5px;" />
                 </div>
                 <!--logo end-->
-                <div class="header-text" style="position:absolute;left:43.5%;top:22px;">
-                    <b>eNote Metrics</b> <span style="color: #aeaaae !important">/</span> {{chartView}} View <span style="color: #aeaaae !important">/</span> {{chartTitle}}
-                </div>
-                <div class="header-text" style="position:absolute;right:15px;top:10px;font-size:14px;font-weight:200;">
-                    <b>Hello ~  </b>
-                </div>
-                <div class="viewbar">
-                    <table class="viewtable">
-                        <tr>
-                            <td ng-repeat="td in viewMap" ng-class='{viewselected: chartView==td.name}'><a href="index.html#{{chartPath}}{{td.path}}">{{td.name}} View</a></td>
-                        </tr>
-                    </table>
-                </div>
 
             </header>
             <!--header end-->
@@ -61,7 +48,7 @@
             <aside>
                 <div id="sidebar"  class="nav-collapse ">
                     <!-- sidebar menu start-->
-                    <!--<ul class="sidebar-menu">
+                    <ul class="sidebar-menu">
                         <li class="sub-menu" ng-repeat="li in pathMap">
                             <a href="javascript:;" class="">
                                 <span class="text">{{li.name}}</span>
@@ -74,9 +61,6 @@
                                 <li><a class="" href="javascript:;" ng-click="building()">Quarterly View</a></li>
                             </ul>
                         </li>
-                    </ul>-->
-                    <ul class="ulsidebar">
-                        <li ng-repeat="li in pathMap" class="lisidebar" ng-class="{lisidebarselected:chartTitle==li.name}"><a href="index.html#{{li.path}}{{viewPath}}">{{li.name}}</a></li>
                     </ul>
                     <!-- sidebar menu end-->
                 </div>
@@ -88,7 +72,7 @@
                 <section class="wrapper" ng-hide="notReady">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h3 class="page-header" style="margin-left:5px;margin-top:20px;margin-bottom:10px;padding:0px;"><span class="charttitle">{{chartTitle | uppercase}}</span>      {{chartView}} View ( {{display.date[0] | date:"dd-MMM-yyyy"}} to {{display.date[1] | date:"dd-MMM-yyyy"}} )</h3>
+                            <h3 class="page-header" style="margin-left:30px;margin-top:20px;"><i class="fa fa-laptop"></i> {{chartTitle}} - {{chartView}} View ( {{display.date[0] | date:"dd-MMM-yyyy"}} to {{display.date[1] | date:"dd-MMM-yyyy"}} )</h3>
                                 <!-- <ol class="breadcrumb">
                                     <li><i class="fa fa-home"></i><a href="javascript:;">Home</a></li>
                                     <li><i class="fa fa-laptop"></i>Total Messages Sent</li>
@@ -163,7 +147,7 @@
                                                     <svg id="tipsvg2"></svg>
                                                 </div>
                                             </div>
-                                            <div class="panel panel-default" >
+                                            <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     {{toolTipSubTitle3 | uppercase }} ({{toolTipTitle}}) <!-- <span class="label label-success">{{toolTipSubTitle}}</span> --> <span class="badge">Total: {{toolTipNum3}}</span>
 
@@ -178,8 +162,7 @@
                                     </div>
                                 </div>
                                 <div class="panel-body" data-ng-hide="data.showChart">
-                                    <h1>No data found on {{env | uppercase}} for this aggregation type!</h1>
-
+                                    <h1>There is no data in this instance for this aggrete type</h1>
                                 </div>
                             </div>
                         </div>
